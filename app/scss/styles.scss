@@ -3,15 +3,16 @@ html {
   height: 100%;
 }
 body {
-  height: 100%;
-  margin: 0;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
   background: rgb(19, 19, 19) !important;
 }
 
 p, h1, h2, h3{
   color: white !important;
+}
+
+p{
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 .jumbotron{
@@ -29,8 +30,10 @@ p, h1, h2, h3{
 }
 
 .stuck {
-  position: fixed;
-  width: inherit;
-  overflow-y: auto;
-  padding-right: 3em;
+  @media (min-width: 1200px) {
+    position: fixed;
+    width: inherit;
+    overflow-y: auto;
+    padding-right: 3em;
+  }
 }
