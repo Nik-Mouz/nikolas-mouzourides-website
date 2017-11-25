@@ -1,9 +1,36 @@
-html body{
-  background-color: #5a5a5a !important;
+
+html {
+  height: 100%;
+}
+body {
+  height: 100%;
+  margin: 0;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background: rgb(19, 19, 19) !important;
 }
 
-.content{
-  .container{
-    padding-top: 3em;
-  }
+p, h1, h2, h3{
+  color: white !important;
+}
+
+.jumbotron{
+  background-color: #292929 !important;
+  border: 1px solid white;
+}
+
+.col-lg-offset-4{
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.nav-col{
+  padding-bottom: 2em;
+}
+
+.stuck {
+  position: fixed;
+  width: inherit;
+  overflow-y: auto;
+  padding-right: 3em;
 }
