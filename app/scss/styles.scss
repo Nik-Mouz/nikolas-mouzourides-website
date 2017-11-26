@@ -29,6 +29,10 @@ p{
 
 .nav-col{
   padding-bottom: 2em;
+  .navbar-brand, .nav{
+    font-size: 22px;
+  }
+
 }
 
 .img-fluid{
@@ -50,4 +54,9 @@ p{
 p {
   font-size: 21px;
   font-weight:200;
+}
+
+.table{
+  background-color: white;
+  font-size: 18px;
 }
