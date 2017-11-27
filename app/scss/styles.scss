@@ -52,10 +52,19 @@ p{
 }
 p {
   font-size: 21px;
-  font-weight:200;
+  //font-weight:200;
 }
 
 .table{
   background-color: white;
   font-size: 18px;
+}
+
+.carousel{
+  max-width:100%;
+  max-height:95%;
+  carousel-inner{
+    max-width:100%;
+    max-height:95%;
+  }
 }
