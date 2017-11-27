@@ -10,11 +10,6 @@ var cache = require('gulp-cache');
 var del = require('del');
 var runSequence = require('run-sequence');
 
-// Basic Gulp task syntax
-gulp.task('hello', function() {
-    console.log('Hello Zell!');
-})
-
 // Development Tasks
 // -----------------
 
@@ -25,7 +20,7 @@ gulp.task('browserSync', function() {
             baseDir: 'app'
         }
     })
-})
+});
 
 gulp.task('sass', function() {
     return gulp.src('app/scss/**/*.scss') // Gets all files ending with .scss in app/scss and children dirs
@@ -34,14 +29,14 @@ gulp.task('sass', function() {
         .pipe(browserSync.reload({ // Reloading with Browser Sync
             stream: true
         }));
-})
+});
 
 // Watchers
 gulp.task('watch', function() {
     gulp.watch('app/scss/**/*.scss', ['sass']);
     gulp.watch('app/*.html', browserSync.reload);
-    gulp.watch('app/js/*.js', browserSync.reload);
-})
+    gulp.watch('app/js/**/*.js', browserSync.reload);
+});
 
 // Optimization Tasks
 // ------------------
@@ -49,10 +44,10 @@ gulp.task('watch', function() {
 // Optimizing CSS and JavaScript
 gulp.task('useref', function() {
 
-    return gulp.src('app/*.html')
+    return gulp.src('app/**/*.+(js|css)')
         .pipe(useref())
-        .pipe(gulpIf('*.js', uglify()))
-        .pipe(gulpIf('*.css', cssnano()))
+        .pipe(gulpIf('app/js/*.js', uglify()))
+        .pipe(gulpIf('app/css/*.css', cssnano()))
         .pipe(gulp.dest('dist'));
 });
 
@@ -71,7 +66,7 @@ gulp.task('clean', function() {
     return del.sync('dist').then(function(cb) {
         return cache.clearAll(cb);
     });
-})
+});
 
 gulp.task('clean:dist', function() {
     return del.sync(['dist/**/*', '!dist/images', '!dist/images/**/*']);
@@ -84,7 +79,8 @@ gulp.task('default', function(callback) {
     runSequence(['sass', 'browserSync'], 'watch',
         callback
     )
-})
+
+});
 
 gulp.task('build', function(callback) {
     runSequence(
@@ -93,4 +89,4 @@ gulp.task('build', function(callback) {
         ['useref', 'images'],
         callback
     )
-})
+});
