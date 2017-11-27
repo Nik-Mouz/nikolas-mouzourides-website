@@ -106,5 +106,6 @@ modules.xml
 .idea/misc.xml
 *.ipr
 package*.json
+app/css
 
 # End of https://www.gitignore.io/api/intellij,intellij+iml
