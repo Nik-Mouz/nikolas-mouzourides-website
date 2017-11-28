@@ -44,7 +44,7 @@ gulp.task('watch', function() {
 // Optimizing CSS and JavaScript
 gulp.task('useref', function() {
 
-    return gulp.src('app/**/*.+(js|css)')
+    return gulp.src('app/**/*.+(js|css|html)')
         .pipe(useref())
         .pipe(gulpIf('app/js/*.js', uglify()))
         .pipe(gulpIf('app/css/*.css', cssnano()))
