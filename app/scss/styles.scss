@@ -60,20 +60,21 @@ p {
 }
 
 .text-content{
-  max-height: 50vh;
+  max-height: 50%;
   padding-bottom: 5em;
 }
 
 .graphical-content{
   margin-bottom: 3em;
-  max-height: 50vh;
-  background-color: rgb(5, 5, 5);
-  width: 108%;
-  margin-left: -4%;
+  max-height: 40%;
+  background-color: rgba(5, 5, 5, 0.4);
+  width: 100%;
 }
 
 .carousel-inner > .item > img,
 .carousel-inner > .item > a > img{
   width: 50%;
+  height: 500px;
   margin: auto;
+  border-radius: 4%;
 }
