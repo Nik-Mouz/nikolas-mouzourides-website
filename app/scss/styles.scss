@@ -21,9 +21,9 @@ p{
 }
 
 .col-lg-offset-4{
-  padding-left: 15px;
-  padding-right: 15px;
   background: #292929 !important;
+  display: flex;
+  flex-direction: column;
 }
 
 .nav-col{
@@ -66,7 +66,7 @@ p {
 
 .graphical-content{
   margin-bottom: 3em;
-  max-height: 40%;
+  max-height: 400px;
   background-color: rgba(5, 5, 5, 0.4);
   width: 100%;
 }
