@@ -73,8 +73,11 @@ p {
 
 .carousel-inner > .item > img,
 .carousel-inner > .item > a > img{
-  width: 50%;
-  height: 500px;
   margin: auto;
   border-radius: 4%;
+}
+
+.carousel-inner > .item > img{
+  max-height:400px;
+  width:auto;
 }
