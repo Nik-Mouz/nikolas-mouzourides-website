@@ -1,5 +1,6 @@
 import React from "react";
 import Player from "../Player/Player";
+import EnemyGenerator from "../Enemy/EnemyGenerator";
 
 class Canvas extends React.Component {
   state = { canvasHeight: 0, canvasWidth: 0, x: 0, y: 0 };
@@ -12,10 +13,7 @@ class Canvas extends React.Component {
     });
   }
 
-  getCanvasPosition = (event) => {
-    // mouse position on auto-scaling canvas
-    // https://stackoverflow.com/a/10298843/1232793
-
+  getCanvasPosition = event => {
     const svg = document.getElementById("canvas");
     const point = svg.createSVGPoint();
 
@@ -25,7 +23,6 @@ class Canvas extends React.Component {
     this.setState({ x: x, y: y });
   };
 
-
   render() {
     return (
       <div>
@@ -33,12 +30,26 @@ class Canvas extends React.Component {
           id="canvas"
           preserveAspectRatio="xMaxYMax none"
           onMouseMove={this.getCanvasPosition.bind(this)}
-          viewBox={[window.innerWidth / -2, 100 - window.innerHeight, window.innerWidth, this.state.canvasHeight]}
+          viewBox={[
+            window.innerWidth / -2,
+            100 - window.innerHeight,
+            window.innerWidth,
+            this.state.canvasHeight
+          ]}
         >
-          <Player x={-this.state.canvasWidth / 2 + 50} y={this.state.y}/>
-          <text x={this.state.canvasWidth / 2 - 300} y={-500} className="text">Hello world</text>
+          <Player x={-this.state.canvasWidth / 2 + 50} y={this.state.y} />
+          <EnemyGenerator x={this.state.canvasWidth / 2 - 300} y={-500} />
         </svg>
-        {console.log("x: " + this.state.x + ", y: " + this.state.y + ", canvasWidth: " + this.state.canvasWidth + ", canvasHeight: " + this.state.canvasHeight)}
+        {console.log(
+          "x: " +
+            this.state.x +
+            ", y: " +
+            this.state.y +
+            ", canvasWidth: " +
+            this.state.canvasWidth +
+            ", canvasHeight: " +
+            this.state.canvasHeight
+        )}
       </div>
     );
   }
