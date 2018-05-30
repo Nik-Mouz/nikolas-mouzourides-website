@@ -1,17 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { generateEnemy } from "../../Util/Util";
 import Enemy from "./Enemy";
+import { connect } from "react-redux";
+import { GENERATE_ENEMY, REMOVE_ENEMY } from "./EnemyActionReducer";
+import _ from "lodash";
 
 const EnemyGenerator = props => {
-  const enemy = generateEnemy();
-
   return (
     <Enemy
       x={props.x}
       y={props.y}
-      text={enemy.technology}
-      experienceLevel={enemy.experience}
+      text={_.head(props.enemies).technology}
+      experienceLevel={_.head(props.enemies).experience}
     />
   );
 };
@@ -21,4 +21,23 @@ EnemyGenerator.propTypes = {
   y: PropTypes.number.isRequired
 };
 
-export default EnemyGenerator;
+const mapStateToProps = state => ({
+  enemies: state.enemyReducer.enemies
+});
+
+const mapDispatchToProps = dispatch => {
+  return {
+    generateEnemy: () => {
+      dispatch({
+        type: GENERATE_ENEMY
+      });
+    },
+    removeEnemy: () => {
+      dispatch({
+        type: REMOVE_ENEMY
+      });
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(EnemyGenerator);
