@@ -98,7 +98,7 @@ fabric.properties
 
 ### Intellij+iml Patch ###
 # Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-249601023
-dist
+build
 node_modules
 *.iml
 modules.xml
