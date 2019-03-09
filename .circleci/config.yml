@@ -15,4 +15,4 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: yarn build
-      - run: aws s3 sync build/ s3://nikmouz.dev --delete
+      - run: aws s3 sync public/ s3://nikmouz.dev --delete
