@@ -9,11 +9,11 @@ import MailIcon from "../../images/email-icon.svg";
 import MenuIcon from "../../images/menu-icon.svg";
 import { Link } from "gatsby";
 import "./header.scss";
-import Drawer from "@material-ui/core/es/Drawer/Drawer";
 import List from "@material-ui/core/es/List/List";
 import ListItem from "@material-ui/core/es/ListItem/ListItem";
 import ListItemText from "@material-ui/core/es/ListItemText/ListItemText";
 import Divider from "@material-ui/core/es/Divider/Divider";
+import SwipeableDrawer from "@material-ui/core/es/SwipeableDrawer/SwipeableDrawer";
 
 interface HeaderProps {
   title: string;
@@ -51,11 +51,14 @@ const Header = (props: HeaderProps) => {
         </Toolbar>
       </AppBar>
 
-      <Drawer
+      <SwipeableDrawer
         anchor="right"
         open={open}
-        onClose={() => setOpen(false)}>
+        onClose={() => setOpen(false)}
+        onOpen={() => setOpen(true)}
+      >
         <div
+          className="drawer"
           tabIndex={0}
           role="button"
           onClick={() => setOpen(false)}
@@ -63,11 +66,21 @@ const Header = (props: HeaderProps) => {
         >
           <div>
             <List>
-              {["Home", "Blog", "Get in touch", "Twitter", "LinkedIn"].map((text) => (
-                <ListItem button key={text}>
-                  <ListItemText primary={text}/>
-                </ListItem>
-              ))}
+              <ListItem button key="Home" href="/">
+                <ListItemText primary="Home"/>
+              </ListItem>
+              <ListItem button key="Blog" href="/blog">
+                <ListItemText primary="Blog"/>
+              </ListItem>
+              <ListItem button key="Email" href="mailto:nikolas.mouzourides@gmail.com">
+                <ListItemText primary="Email"/>
+              </ListItem>
+              <ListItem button key="Twitter" href="https://twitter.com/Nik_Mouz">
+                <ListItemText primary="Twitter"/>
+              </ListItem>
+              <ListItem button key="LinkedIn" href="https://www.linkedin.com/in/nikolas-mouzourides-894b45113/">
+                <ListItemText primary="LinkedIn"/>
+              </ListItem>
               <Divider/>
               <ListItem button key="Close" onClick={() => setOpen(false)}>
                 <ListItemText primary="Close"/>
@@ -75,7 +88,7 @@ const Header = (props: HeaderProps) => {
             </List>
           </div>
         </div>
-      </Drawer>
+      </SwipeableDrawer>
     </div>
   );
 };
