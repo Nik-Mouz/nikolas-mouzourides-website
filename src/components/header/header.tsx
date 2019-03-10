@@ -66,21 +66,31 @@ const Header = (props: HeaderProps) => {
         >
           <div>
             <List>
-              <ListItem button key="Home" href="/">
-                <ListItemText primary="Home"/>
-              </ListItem>
-              <ListItem button key="Blog" href="/blog">
-                <ListItemText primary="Blog"/>
-              </ListItem>
-              <ListItem button key="Email" href="mailto:***REMOVED***">
-                <ListItemText primary="Email"/>
-              </ListItem>
-              <ListItem button key="Twitter" href="https://twitter.com/Nik_Mouz">
-                <ListItemText primary="Twitter"/>
-              </ListItem>
-              <ListItem button key="LinkedIn" href="https://www.linkedin.com/in/nikolas-mouzourides-894b45113/">
-                <ListItemText primary="LinkedIn"/>
-              </ListItem>
+              <Link to="/">
+                <ListItem button key="Home">
+                  <ListItemText primary="Home"/>
+                </ListItem>
+              </Link>
+              <Link to="/blog">
+                <ListItem button key="Blog">
+                  <ListItemText primary="Blog"/>
+                </ListItem>
+              </Link>
+              <a href="mailto:***REMOVED***">
+                <ListItem button key="Email">
+                  <ListItemText primary="Email"/>
+                </ListItem>
+              </a>
+              <a href="https://twitter.com/Nik_Mouz">
+                <ListItem button key="Twitter">
+                  <ListItemText primary="Twitter"/>
+                </ListItem>
+              </a>
+              <a href="https://www.linkedin.com/in/nikolas-mouzourides-894b45113/">
+                <ListItem button key="LinkedIn">
+                  <ListItemText primary="LinkedIn"/>
+                </ListItem>
+              </a>
               <Divider/>
               <ListItem button key="Close" onClick={() => setOpen(false)}>
                 <ListItemText primary="Close"/>
