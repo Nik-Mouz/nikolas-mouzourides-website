@@ -19,19 +19,13 @@ module.exports = {
       }
     },
     {
-      resolve: "gatsby-plugin-emoji-favicon",
-      options: {
-        emoji: "💻"
-      }
-    },
-    {
       resolve: `gatsby-plugin-manifest`,
       options: {
         name: `gatsby-starter-default`,
         short_name: `starter`,
         start_url: `/`,
-        background_color: `#663399`,
-        theme_color: `#663399`,
+        background_color: `#3f51b5`,
+        theme_color: `#3f51b5`,
         display: `minimal-ui`
       }
     }
