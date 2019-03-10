@@ -25,7 +25,7 @@ const Header = (props: HeaderProps) => {
     <div className="header">
       <AppBar position="static">
         <Toolbar className="container d-flex justify-content-between">
-          <Typography className="logo" variant="h4" color="inherit">
+          <Typography className="logo font-weight-bolder font-italic" variant="h4" color="inherit">
             <Link to="/">{props.title}</Link>
           </Typography>
           <div className="d-flex justify-content-around">
