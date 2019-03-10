@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: digitalgenius/alpine-node-aws
+      - image: node:10.15.3-alpine
     steps:
       - checkout
       - restore_cache:
@@ -15,4 +15,4 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: yarn build
-      - run: aws s3 sync public/ s3://nikmouz.dev --delete
+      - run: npx aws s3 sync public/ s3://nikmouz.dev --delete
