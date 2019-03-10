@@ -1,0 +1,41 @@
+.header {
+
+  .logo {
+    a {
+      color: white;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: white;
+    }
+  }
+
+  a {
+    color: white;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: white;
+  }
+
+  .nav-icons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+
+  @media (max-width: 576px) {
+    .nav-icons {
+      display: none;
+    }
+  }
+
+  @media (min-width: 576px) {
+    .menu-icon {
+      display: none;
+    }
+  }
+}
+

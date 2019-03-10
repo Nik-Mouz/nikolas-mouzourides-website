@@ -4,9 +4,13 @@
   "version": "0.1.0",
   "author": "Nik Mouzourides <nikolas.mouzourides@gmail.com>",
   "dependencies": {
+    "@material-ui/core": "^3.9.2",
+    "@material-ui/icons": "^3.0.2",
     "@types/react-helmet": "^5.0.8",
+    "bootstrap": "^4.3.1",
     "gatsby": "^2.1.27",
     "gatsby-image": "^2.0.31",
+    "gatsby-plugin-emoji-favicon": "^1.2.0",
     "gatsby-plugin-manifest": "^2.0.22",
     "gatsby-plugin-offline": "^2.0.24",
     "gatsby-plugin-react-helmet": "^3.0.8",
@@ -21,6 +25,8 @@
     "react-helmet": "^5.2.0"
   },
   "devDependencies": {
+    "gatsby-plugin-sass": "^2.0.10",
+    "node-sass": "^4.11.0",
     "prettier": "^1.16.4",
     "typescript": "^3.3.3333"
   },
