@@ -3,10 +3,10 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import EmailIcon from "@material-ui/icons/Email";
 import TwitterIcon from "../../images/twitter-icon.svg";
 import LinkedinIcon from "../../images/linkedin-icon.svg";
+import MailIcon from "../../images/email-icon.svg";
+import MenuIcon from "../../images/menu-icon.svg";
 import { Link } from "gatsby";
 import "./header.scss";
 import Drawer from "@material-ui/core/es/Drawer/Drawer";
@@ -34,7 +34,7 @@ const Header = (props: HeaderProps) => {
                 <Link to="/blog">Blog</Link>
               </Typography>
               <IconButton color="inherit" aria-label="Email" href="mailto:***REMOVED***">
-                <EmailIcon/>
+                <img src={MailIcon} alt="Mail icon"/>
               </IconButton>
               <IconButton color="inherit" aria-label="Twitter" href="https://twitter.com/Nik_Mouz">
                 <img src={TwitterIcon} alt="Twitter icon"/>
@@ -45,7 +45,7 @@ const Header = (props: HeaderProps) => {
               </IconButton>
             </div>
             <IconButton className="menu-icon" color="inherit" aria-label="Menu" onClick={() => setOpen(!open)}>
-              <MenuIcon/>
+              <img src={MenuIcon} alt="Menu icon"/>
             </IconButton>
           </div>
         </Toolbar>
