@@ -5,6 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import TwitterIcon from "../../images/twitter-icon.svg";
 import LinkedinIcon from "../../images/linkedin-icon.svg";
+import GitHubIcon from "../../images/github-icon.png";
 import MailIcon from "../../images/email-icon.svg";
 import MenuIcon from "../../images/menu-icon.svg";
 import { Link } from "gatsby";
@@ -35,6 +36,10 @@ const Header = (props: HeaderProps) => {
               </Typography>
               <IconButton color="inherit" aria-label="Email" href="mailto:nikolas.mouzourides@gmail.com">
                 <img src={MailIcon} alt="Mail icon"/>
+              </IconButton>
+              <IconButton color="inherit" aria-label="Linkedin"
+                          href="https://www.github.com/mouzourides">
+                <img src={GitHubIcon} height="28" width="30" alt="GitHub icon"/>
               </IconButton>
               <IconButton color="inherit" aria-label="Twitter" href="https://twitter.com/Nik_Mouz">
                 <img src={TwitterIcon} alt="Twitter icon"/>
@@ -76,6 +81,11 @@ const Header = (props: HeaderProps) => {
                   <ListItemText primary="Blog"/>
                 </ListItem>
               </Link>
+              <a href="https://www.github.com/mouzourides">
+                <ListItem button key="GitHub">
+                  <ListItemText primary="GitHub"/>
+                </ListItem>
+              </a>
               <a href="mailto:nikolas.mouzourides@gmail.com">
                 <ListItem button key="Email">
                   <ListItemText primary="Email"/>
