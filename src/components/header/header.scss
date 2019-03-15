@@ -1,9 +1,18 @@
+@import url('https://fonts.googleapis.com/css?family=Anonymous+Pro');
+
 .header {
 
+  .nav-heading {
+    //padding-top: 0.2rem;
+    font-size: 32px;
+  }
+
   .logo {
+    padding-right: 1em;
     a {
       color: white;
       text-decoration: none;
+      font-family: 'Anonymous Pro', monospace;
     }
 
     a:hover {
@@ -26,13 +35,13 @@
     justify-content: space-evenly;
   }
 
-  @media (max-width: 576px) {
-    .nav-icons {
+  @media (max-width: 731px) {
+    .no-display-mobile {
       display: none;
     }
   }
 
-  @media (min-width: 576px) {
+  @media (min-width: 732px) {
     .menu-icon {
       display: none;
     }

@@ -25,15 +25,17 @@ const Header = (props: HeaderProps) => {
   return (
     <div className="header">
       <AppBar position="static">
-        <Toolbar className="container d-flex justify-content-between">
-          <Typography className="logo font-weight-bolder font-italic" variant="h4" color="inherit">
-            <Link to="/">{props.title}</Link>
-          </Typography>
+        <Toolbar className="d-flex justify-content-between">
+          <div className="d-flex flex-row">
+            <Typography className="logo font-weight-bolder pr-lg-4" variant="h4" color="inherit">
+              <Link to="/">{props.title} <span className="no-display-mobile">|</span> </Link>
+            </Typography>
+            <Typography className="nav-heading pr-lg-3 pr-5 mr-3 no-display-mobile" variant="h5" color="inherit">
+              <Link to="/blog">Blog</Link>
+            </Typography>
+          </div>
           <div className="d-flex justify-content-around">
-            <div className="nav-icons">
-              <Typography className="pt-1 pr-4" variant="h5" color="inherit">
-                <Link to="/blog">Blog</Link>
-              </Typography>
+            <div className="nav-icons no-display-mobile">
               <IconButton color="inherit" aria-label="Email" href="mailto:***REMOVED***">
                 <img src={MailIcon} alt="Mail icon"/>
               </IconButton>
