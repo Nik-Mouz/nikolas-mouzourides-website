@@ -1,10 +1,3 @@
-/**
- * SEO component that queries for data with
- *  Gatsby's useStaticQuery React hook
- *
- * See: https://www.gatsbyjs.org/docs/use-static-query/
- */
-
 import React from "react";
 import Helmet from "react-helmet";
 import { graphql, useStaticQuery } from "gatsby";
@@ -85,29 +78,6 @@ const Seo = (props: SeoProps) => {
             : []
         )
         .concat(meta)}
-      link={[
-        {
-          rel: "apple-touch-icon",
-          sizes:"180x180",
-          href: "../images/favicon/apple-touch-icon.png"
-        },
-        {
-          rel: "icon",
-          type: "image/png",
-          sizes:"32x32",
-          href: "../images/favicon/favicon-32x32.png"
-        },
-        {
-          rel: "icon",
-          type: "image/png",
-          sizes:"16x16",
-          href: "../images/favicon/favicon-16x16.png"
-        },
-        {
-          rel: "manifesto",
-          href: "../images/favicon/site.webmanifest"
-        }
-      ]}
     />
   );
 };
