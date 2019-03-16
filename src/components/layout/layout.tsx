@@ -14,12 +14,13 @@ import "./layout.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 interface LayoutProps {
-  children: JSX.Element[]
+  children: JSX.Element[];
+  heroImage?: JSX.Element;
 }
 
 const Layout = (props: LayoutProps) => (
-  <StaticQuery
-    query={graphql`
+    <StaticQuery
+      query={graphql`
       query SiteTitleQuery {
         site {
           siteMetadata {
@@ -28,16 +29,17 @@ const Layout = (props: LayoutProps) => (
         }
       }
     `}
-    render={data => (
-      <div className="h-100 d-flex justify-content-lg-between flex-column">
-        <div>
-          <Header title={data.site.siteMetadata.title}/>
-          <main className="container mt-3">{props.children}</main>
+      render={data => (
+        <div className="h-100 d-flex justify-content-lg-between flex-column">
+          <div>
+            <Header title={data.site.siteMetadata.title}/>
+            {props.heroImage && props.heroImage}
+            <main className={props.heroImage ? 'container' : 'main container'}>{props.children}</main>
+          </div>
+          <Footer/>
         </div>
-        <Footer/>
-      </div>
-    )}
-  />
-);
+      )}
+    />
+  );
 
 export default Layout;
