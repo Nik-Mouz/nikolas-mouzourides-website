@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import TwitterIcon from "../../images/twitter-icon.svg";
@@ -23,41 +21,39 @@ interface HeaderProps {
 const Header = (props: HeaderProps) => {
   const [open, setOpen] = useState(false);
   return (
-    <div className="header">
-      <AppBar position="static">
-        <Toolbar className="d-flex justify-content-between">
-          <div className="d-flex flex-row">
-            <Typography className="logo font-weight-bolder" variant="display1" color="inherit">
-              <Link to="/">{props.title} </Link>
-            </Typography>
-            <h3 className="logo separator font-weight-bold no-display-mobile">|</h3>
-            <Typography className="nav-heading pr-5 mr-3 no-display-mobile" variant="headline" color="inherit">
-              <Link to="/blog">Blog</Link>
-            </Typography>
-          </div>
-          <div className="d-flex justify-content-around">
-            <div className="nav-icons no-display-mobile">
-              <IconButton color="inherit" aria-label="Email" href="mailto:***REMOVED***">
-                <img src={MailIcon} alt="Mail icon"/>
-              </IconButton>
-              <IconButton color="inherit" aria-label="Linkedin"
-                          href="https://www.github.com/mouzourides">
-                <img src={GitHubIcon} height="28" width="30" alt="GitHub icon"/>
-              </IconButton>
-              <IconButton color="inherit" aria-label="Twitter" href="https://twitter.com/Nik_Mouz">
-                <img src={TwitterIcon} alt="Twitter icon"/>
-              </IconButton>
-              <IconButton color="inherit" aria-label="Linkedin"
-                          href="https://www.linkedin.com/in/nikolas-mouzourides-894b45113/">
-                <img src={LinkedinIcon} alt="Linkedin icon"/>
-              </IconButton>
-            </div>
-            <IconButton className="menu-icon" color="inherit" aria-label="Menu" onClick={() => { setOpen(!open); }}>
-              <img src={MenuIcon} alt="Menu icon"/>
-            </IconButton>
-          </div>
-        </Toolbar>
-      </AppBar>
+    <div className="header d-flex justify-content-between">
+      <div className="d-flex flex-row">
+        <Typography className="logo font-weight-bolder" variant="display1" color="inherit">
+          <Link to="/">{props.title} </Link>
+        </Typography>
+        <h3 className="logo separator font-weight-bold no-display-mobile">|</h3>
+        <Typography className="nav-heading pr-5 mr-3 no-display-mobile" variant="headline" color="inherit">
+          <Link to="/blog">Blog</Link>
+        </Typography>
+      </div>
+      <div className="d-flex justify-content-around">
+        <div className="nav-icons no-display-mobile">
+          <IconButton color="inherit" aria-label="Email" href="mailto:***REMOVED***">
+            <img src={MailIcon} alt="Mail icon"/>
+          </IconButton>
+          <IconButton color="inherit" aria-label="Linkedin"
+                      href="https://www.github.com/mouzourides">
+            <img src={GitHubIcon} height="28" width="30" alt="GitHub icon"/>
+          </IconButton>
+          <IconButton color="inherit" aria-label="Twitter" href="https://twitter.com/Nik_Mouz">
+            <img src={TwitterIcon} alt="Twitter icon"/>
+          </IconButton>
+          <IconButton color="inherit" aria-label="Linkedin"
+                      href="https://www.linkedin.com/in/nikolas-mouzourides-894b45113/">
+            <img src={LinkedinIcon} alt="Linkedin icon"/>
+          </IconButton>
+        </div>
+        <IconButton className="menu-icon" color="inherit" aria-label="Menu" onClick={() => {
+          setOpen(!open);
+        }}>
+          <img src={MenuIcon} alt="Menu icon"/>
+        </IconButton>
+      </div>
 
       <SwipeableDrawer
         anchor="right"

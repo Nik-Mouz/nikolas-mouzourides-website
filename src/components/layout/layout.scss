@@ -20,6 +20,17 @@ html {
   }
 }
 
+.hero {
+  height: 500px;
+  width: 100%;
+  object-fit: cover;
+  object-position: bottom;
+}
+
+.main {
+  margin-top: 6rem;
+}
+
 article,
 aside,
 details,
