@@ -3,12 +3,18 @@
 .header {
 
   .nav-heading {
-    //padding-top: 0.2rem;
+    font-family: 'Anonymous Pro', monospace;
+    font-weight: bold;
+    line-height: 45px;
     font-size: 32px;
   }
 
+  .separator {
+    line-height: 40px;
+  }
+
   .logo {
-    padding-right: 1em;
+    padding-right: 2rem;
     a {
       color: white;
       text-decoration: none;
