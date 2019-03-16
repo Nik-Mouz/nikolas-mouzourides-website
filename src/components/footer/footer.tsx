@@ -3,8 +3,10 @@ import "./footer.scss"
 
 const Footer = () => {
   return (
-    <footer className="footer fixed-bottom w-100 p-3">
-      nikmouz.dev © {new Date().getFullYear()}
+    <footer className="footer w-100 p-3">
+      <div className="container">
+        <span>Nikolas Mouzourides © {new Date().getFullYear()}</span>
+      </div>
     </footer>
   )
 };
