@@ -3,15 +3,15 @@
 .header {
   position: absolute;
   width: 100%;
-  padding: 10px 3rem;
+  padding: 10px 1rem;
   background-color: rgba(14, 14, 14, 0.9);
   color: white;
 
   .nav-heading {
     font-family: 'Anonymous Pro', monospace;
     font-weight: bold;
-    line-height: 45px;
     font-size: 32px;
+    line-height: 45px;
   }
 
   .separator {
@@ -20,6 +20,7 @@
 
   .logo {
     padding-right: 2rem;
+    line-height: 45px;
     a {
       color: white;
       text-decoration: none;

@@ -30,7 +30,7 @@ const Layout = (props: LayoutProps) => (
       }
     `}
       render={data => (
-        <div className="h-100 d-flex justify-content-lg-between flex-column">
+        <div className="h-100 d-flex justify-content-between flex-column">
           <div>
             <Header title={data.site.siteMetadata.title}/>
             {props.heroImage && props.heroImage}
