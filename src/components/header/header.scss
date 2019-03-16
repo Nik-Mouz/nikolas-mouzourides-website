@@ -1,17 +1,18 @@
 @import url('https://fonts.googleapis.com/css?family=Anonymous+Pro');
 
 .header {
-  position: absolute;
+  position: fixed;
   width: 100%;
   padding: 10px 1rem;
-  background-color: rgba(14, 14, 14, 0.9);
+  background-color: #0e0e0e;
   color: white;
+  box-shadow: 0 2px 8px black;
 
   .nav-heading {
     font-family: 'Anonymous Pro', monospace;
     font-weight: bold;
     font-size: 32px;
-    line-height: 45px;
+    line-height: 46px;
   }
 
   .separator {
@@ -20,7 +21,7 @@
 
   .logo {
     padding-right: 2rem;
-    line-height: 45px;
+    line-height: 43px;
     a {
       color: white;
       text-decoration: none;
