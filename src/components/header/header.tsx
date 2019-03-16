@@ -27,10 +27,11 @@ const Header = (props: HeaderProps) => {
       <AppBar position="static">
         <Toolbar className="d-flex justify-content-between">
           <div className="d-flex flex-row">
-            <Typography className="logo font-weight-bolder pr-lg-4" variant="display1" color="inherit">
-              <Link to="/">{props.title} <span className="no-display-mobile">|</span> </Link>
+            <Typography className="logo font-weight-bolder" variant="display1" color="inherit">
+              <Link to="/">{props.title} </Link>
             </Typography>
-            <Typography className="nav-heading pr-lg-3 pr-5 mr-3 no-display-mobile" variant="headline" color="inherit">
+            <h3 className="logo separator font-weight-bold no-display-mobile">|</h3>
+            <Typography className="nav-heading pr-5 mr-3 no-display-mobile" variant="headline" color="inherit">
               <Link to="/blog">Blog</Link>
             </Typography>
           </div>
