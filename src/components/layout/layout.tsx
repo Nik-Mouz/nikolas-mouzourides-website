@@ -34,7 +34,7 @@ const Layout = (props: LayoutProps) => (
           <div>
             <Header title={data.site.siteMetadata.title}/>
             {props.heroImage && props.heroImage}
-            <main className={props.heroImage ? 'container' : 'main container'}>{props.children}</main>
+            <main className={props.heroImage ? 'container pt-3' : 'main container'}>{props.children}</main>
           </div>
           <Footer/>
         </div>
