@@ -41,7 +41,10 @@ const IndexPage = (props: Props) => {
         <h1>Recent Activity</h1>
         <div className="d-flex flex-row flex-wrap">
           {posts.map((post) =>
-             <BlogCard title={post.node.frontmatter.title} description={post.node.frontmatter.description} imagePath={HeroImage}/>
+             <BlogCard title={post.node.frontmatter.title}
+                       description={post.node.frontmatter.description}
+                       url={post.node.frontmatter.path}
+                       imagePath={HeroImage}/>
           )}
         </div>
       </Layout>

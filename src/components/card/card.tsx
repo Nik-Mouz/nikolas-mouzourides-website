@@ -9,13 +9,14 @@ import "./card.scss";
 interface CardProps {
   title: string;
   description: string;
+  url: string;
   imagePath: string;
 }
 
 const BlogCard = (props: CardProps) => (
   <>
     <Card className="card mb-4">
-      <CardActionArea>
+      <CardActionArea href={props.url}>
         <CardMedia title="Card"/>
         <img className="img-fluid" height="200px" src={props.imagePath}/>
         <CardContent>
