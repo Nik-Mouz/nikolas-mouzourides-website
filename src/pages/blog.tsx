@@ -30,7 +30,11 @@ const Blog = (props: Props) => {
       <h1 className="pb-2">Blog</h1>
       <div className="d-flex flex-row flex-wrap">
         {posts.map((post) =>
-          <BlogCard title={post.node.frontmatter.title} description={post.node.frontmatter.description} imagePath={BlogHeroImage}/>
+          <BlogCard title={post.node.frontmatter.title}
+                    url={post.node.frontmatter.path}
+                    description={post.node.frontmatter.description}
+                    imagePath={BlogHeroImage}
+          />
         )}
       </div>
     </Layout>
