@@ -15,7 +15,7 @@ module.exports = {
       resolve: `gatsby-plugin-material-ui`,
       options: {
         // Add any options here
-      },
+      }
     },
     {
       resolve: `gatsby-source-filesystem`,
@@ -36,6 +36,14 @@ module.exports = {
       }
     },
     {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `${__dirname}/blogs`,
+        name: "markdown-pages"
+      }
+    },
+    `gatsby-transformer-remark`,
+    {
       resolve: `gatsby-plugin-favicon`,
       options: {
         logo: "./src/images/favicon.png",
@@ -45,14 +53,14 @@ module.exports = {
         appDescription: null,
         developerName: null,
         developerURL: null,
-        dir: 'auto',
-        lang: 'en-GB',
-        background: '#0e0e0e',
-        theme_color: '#0e0e0e',
-        display: 'standalone',
-        orientation: 'any',
-        start_url: '/',
-        version: '1.0',
+        dir: "auto",
+        lang: "en-GB",
+        background: "#0e0e0e",
+        theme_color: "#0e0e0e",
+        display: "standalone",
+        orientation: "any",
+        start_url: "/",
+        version: "1.0",
 
         icons: {
           android: true,
