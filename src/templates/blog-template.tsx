@@ -2,6 +2,7 @@ import * as React from "react";
 import { graphql } from "gatsby";
 import Seo from "../components/seo/seo";
 import Layout from "../components/layout/layout";
+import Img, { FluidObject } from "gatsby-image";
 
 interface Props {
   data: {
@@ -11,6 +12,11 @@ interface Props {
         date: string;
         description: string;
         path: string;
+        hero: {
+          childImageSharp: {
+            fluid: FluidObject;
+          }
+        };
       };
       html: string;
     }
@@ -18,12 +24,17 @@ interface Props {
 }
 
 const BlogTemplate = (props: Props) => {
+  console.log(props);
   const { markdownRemark } = props.data;
   const { frontmatter, html } = markdownRemark;
   return (
     <>
       <Layout
-        // heroImage={<img className="hero" style={{height: 400}} src={BlogHeroImage}/>}
+        heroImage={
+          <Img className="hero" imgStyle={{height: 400, objectPosition: "bottom" }} fadeIn={true}
+               fluid={frontmatter.hero.childImageSharp.fluid}
+          />
+        }
       >
         <Seo title={frontmatter.title} description={frontmatter.description}/>
         <h1 className="pb-2">{frontmatter.title}</h1>
@@ -45,6 +56,13 @@ export const pageQuery = graphql`
         path
         title
         description
+        hero {
+          childImageSharp {
+            fluid(maxWidth: 2000) {
+              ...GatsbyImageSharpFluid
+            }
+          }
+        }
       }
     }
   }
