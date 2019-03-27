@@ -3,44 +3,14 @@ import Layout from "../components/layout/layout";
 import Seo from "../components/seo/seo";
 import BlogCard from "../components/card/card";
 import { graphql } from "gatsby";
-import Img, { FluidObject } from "gatsby-image";
+import { BlogData } from "../components/BlogDataProps.state";
 
-interface Props {
-  data: {
-    allMarkdownRemark: {
-      edges: {
-        node: {
-          frontmatter: {
-            date: string;
-            description: string;
-            path: string;
-            title: string;
-            hero: {
-              childImageSharp: {
-                fluid: FluidObject;
-              }
-            };
-          }
-        }
-      }[];
-    },
-    placeholderImage: {
-      childImageSharp: {
-        fluid: FluidObject;
-      }
-    }
-  };
-}
-
-const IndexPage = (props: Props) => {
+const IndexPage = (props: BlogData) => {
   const posts = props.data.allMarkdownRemark.edges;
   const hero = props.data.placeholderImage.childImageSharp.fluid;
   return (
     <>
-      <Layout heroImage={
-        <Img className="hero" imgStyle={{objectFit: "cover", objectPosition: "bottom" }}
-             fadeIn={true} fluid={hero}/>
-      }>
+      <Layout heroImage={hero}>
         <Seo title="Home" description="Nikolas Mouzourides home page" keywords={[`gatsby`, `application`, `react`]}/>
         <h1>Hello world</h1>
         <p>
@@ -53,10 +23,10 @@ const IndexPage = (props: Props) => {
         <h1>Recent Activity</h1>
         <div className="d-flex flex-row flex-wrap">
           {posts.map((post) =>
-             <BlogCard title={post.node.frontmatter.title}
-                       description={post.node.frontmatter.description}
-                       url={post.node.frontmatter.path}
-                       image={post.node.frontmatter.hero.childImageSharp.fluid}/>
+            <BlogCard title={post.node.frontmatter.title}
+                      description={post.node.frontmatter.description}
+                      url={post.node.frontmatter.path}
+                      image={post.node.frontmatter.hero.childImageSharp.fluid}/>
           )}
         </div>
       </Layout>

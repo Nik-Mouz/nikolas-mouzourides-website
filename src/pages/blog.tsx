@@ -3,39 +3,13 @@ import Layout from "../components/layout/layout";
 import Seo from "../components/seo/seo";
 import BlogCard from "../components/card/card";
 import { graphql } from "gatsby";
-import Img, { FluidObject } from "gatsby-image";
+import { BlogData } from "../components/BlogDataProps.state";
 
-interface Props {
-  data: {
-    allMarkdownRemark: {
-      edges: {
-        node: {
-          frontmatter: {
-            date: string;
-            description: string;
-            path: string;
-            title: string;
-            hero: any;
-          }
-        }
-      }[];
-    },
-    placeholderImage: {
-      childImageSharp: {
-        fluid: FluidObject;
-      }
-    }
-  };
-}
-
-const Blog = (props: Props) => {
+const Blog = (props: BlogData) => {
   const posts = props.data.allMarkdownRemark.edges;
-  console.log(props.data);
+  const hero = props.data.placeholderImage.childImageSharp.fluid;
   return (
-    <Layout heroImage={
-      <Img className="hero" imgStyle={{height: 400, objectPosition: "bottom" }} fadeIn={true}
-           fluid={props.data.placeholderImage.childImageSharp.fluid} />
-    }>
+    <Layout heroImage={hero}>
       <Seo title="Blog" description="Nik Mouzourides blog"/>
       <h1 className="pb-2">Blog</h1>
       <div className="d-flex flex-row flex-wrap">
