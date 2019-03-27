@@ -3,13 +3,14 @@ import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "../../images/menu-icon.svg";
 import { Link } from "gatsby";
-import "./header.scss";
 import List from "@material-ui/core/es/List/List";
 import ListItem from "@material-ui/core/es/ListItem/ListItem";
 import ListItemText from "@material-ui/core/es/ListItemText/ListItemText";
 import Divider from "@material-ui/core/es/Divider/Divider";
 import SwipeableDrawer from "@material-ui/core/es/SwipeableDrawer/SwipeableDrawer";
-import SocialMediaIcons from "./SocialMediaIcons";
+import SocialMediaIcons from "../social-media-icons/social-media-icons";
+
+import "./header.scss";
 
 interface HeaderProps {
   title: string;
