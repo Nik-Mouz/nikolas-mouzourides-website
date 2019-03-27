@@ -3,9 +3,9 @@ import Layout from "../components/layout/layout";
 import Seo from "../components/seo/seo";
 import BlogCard from "../components/card/card";
 import { graphql } from "gatsby";
-import { BlogData } from "../components/BlogDataProps.state";
+import { BlogProps } from "../components/BlogProps.state";
 
-const Blog = (props: BlogData) => {
+const Blog = (props: BlogProps) => {
   const posts = props.data.allMarkdownRemark.edges;
   const hero = props.data.placeholderImage.childImageSharp.fluid;
   return (

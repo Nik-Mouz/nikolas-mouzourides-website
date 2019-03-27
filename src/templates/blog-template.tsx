@@ -3,7 +3,7 @@ import { graphql } from "gatsby";
 import Seo from "../components/seo/seo";
 import Layout from "../components/layout/layout";
 import { FluidObject } from "gatsby-image";
-import { Frontmatter } from "../components/BlogDataProps.state";
+import { Frontmatter } from "../components/BlogProps.state";
 
 interface Props {
   data: {
