@@ -4,8 +4,9 @@ import CardActionArea from "@material-ui/core/es/CardActionArea/CardActionArea";
 import CardContent from "@material-ui/core/es/CardContent/CardContent";
 import Typography from "@material-ui/core/es/Typography/Typography";
 import Card from "@material-ui/core/es/Card/Card";
-import "./card.scss";
 import Img, { FluidObject } from "gatsby-image";
+
+import "./card.scss";
 
 interface CardProps {
   title: string;

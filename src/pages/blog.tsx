@@ -3,7 +3,7 @@ import Layout from "../components/layout/layout";
 import Seo from "../components/seo/seo";
 import BlogCard from "../components/card/card";
 import { graphql } from "gatsby";
-import { BlogProps } from "../components/BlogProps.state";
+import { BlogProps } from "../components/blog-props.state";
 
 const Blog = (props: BlogProps) => {
   const posts = props.data.allMarkdownRemark.edges;

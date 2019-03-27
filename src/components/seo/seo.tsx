@@ -3,10 +3,10 @@ import Helmet from "react-helmet";
 import { graphql, useStaticQuery } from "gatsby";
 
 interface SeoProps {
-  title: string
-  description: string,
-  meta?: any[],
-  keywords?: string[]
+  title: string;
+  description: string;
+  meta?: any[];
+  keywords?: string[];
 }
 
 const Seo = (props: SeoProps) => {
