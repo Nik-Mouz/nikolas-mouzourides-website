@@ -21,13 +21,17 @@ html {
 }
 
 .hero {
-  height: 500px;
+  height: 400px;
   width: 100%;
-  object-fit: cover;
-  object-position: bottom;
+  img {
+    height: 400px;
+    width: 100%;
+    object-fit: cover;
+    object-position: bottom !important;;
 
-  @media (max-width: 731px) {
-    object-position: left;
+    @media (max-width: 731px) {
+      object-position: left !important;;
+    }
   }
 }
 

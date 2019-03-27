@@ -5,12 +5,13 @@ import CardContent from "@material-ui/core/es/CardContent/CardContent";
 import Typography from "@material-ui/core/es/Typography/Typography";
 import Card from "@material-ui/core/es/Card/Card";
 import "./card.scss";
+import Img, { FluidObject } from "gatsby-image";
 
 interface CardProps {
   title: string;
   description: string;
   url: string;
-  imagePath: string;
+  image: FluidObject;
 }
 
 const BlogCard = (props: CardProps) => (
@@ -18,7 +19,7 @@ const BlogCard = (props: CardProps) => (
     <Card className="card mb-4">
       <CardActionArea href={props.url}>
         <CardMedia title="Card"/>
-        <img className="img-fluid" height="200px" src={props.imagePath}/>
+        <Img className="img-fluid" style={{ height: 200 }} fadeIn={true} fluid={props.image}/>
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
             {props.title}

@@ -1,10 +1,9 @@
 import React from "react";
-
 import Layout from "../components/layout/layout";
 import Seo from "../components/seo/seo";
-import HeroImage from "../images/hero.jpg";
 import BlogCard from "../components/card/card";
 import { graphql } from "gatsby";
+import Img, { FluidObject } from "gatsby-image";
 
 interface Props {
   data: {
@@ -16,19 +15,32 @@ interface Props {
             description: string;
             path: string;
             title: string;
+            hero: {
+              childImageSharp: {
+                fluid: FluidObject;
+              }
+            };
           }
         }
       }[];
+    },
+    placeholderImage: {
+      childImageSharp: {
+        fluid: FluidObject;
+      }
     }
   };
 }
 
 const IndexPage = (props: Props) => {
   const posts = props.data.allMarkdownRemark.edges;
-
+  const hero = props.data.placeholderImage.childImageSharp.fluid;
   return (
     <>
-      <Layout heroImage={<img className="hero" src={HeroImage}/>}>
+      <Layout heroImage={
+        <Img className="hero" imgStyle={{objectFit: "cover", objectPosition: "bottom" }}
+             fadeIn={true} fluid={hero}/>
+      }>
         <Seo title="Home" description="Nikolas Mouzourides home page" keywords={[`gatsby`, `application`, `react`]}/>
         <h1>Hello world</h1>
         <p>
@@ -44,7 +56,7 @@ const IndexPage = (props: Props) => {
              <BlogCard title={post.node.frontmatter.title}
                        description={post.node.frontmatter.description}
                        url={post.node.frontmatter.path}
-                       imagePath={HeroImage}/>
+                       image={post.node.frontmatter.hero.childImageSharp.fluid}/>
           )}
         </div>
       </Layout>
@@ -65,10 +77,24 @@ export const pageQuery = graphql`
               title
               date
               description
+              hero {
+                childImageSharp {
+                  fluid(maxWidth: 310) {
+                    ...GatsbyImageSharpFluid
+                  }
+                }
+              }
             }
           }
         }
       }
+      placeholderImage: file(relativePath: { eq: "hero.jpg" }) {
+          childImageSharp {
+            fluid(maxWidth: 2000) {
+              ...GatsbyImageSharpFluid
+            }
+          }
+        }
     }
 `;
 
