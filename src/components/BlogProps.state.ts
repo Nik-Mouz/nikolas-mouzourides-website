@@ -1,6 +1,6 @@
 import { FluidObject } from "gatsby-image";
 
-export interface BlogData {
+export interface BlogProps {
   data: {
     allMarkdownRemark: {
       edges: Edge[];
