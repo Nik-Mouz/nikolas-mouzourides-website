@@ -14,8 +14,8 @@ const IndexPage = (props: BlogProps) => {
         <Seo title="Home" description="Nikolas Mouzourides home page" keywords={[`gatsby`, `application`, `react`]}/>
         <h1>Hello world</h1>
         <p>
-          My name is Nikolas Mouzourides and I am a full stack developer at
-          <a href="www.blackpepper.co.uk"> Black Pepper Software.</a>
+          My name is Nikolas Mouzourides and I am a full stack developer at&nbsp;
+          <a href="https://www.blackpepper.co.uk" target="_blank">Black Pepper Software.</a>
         </p>
         <p>
           My original goal for this website was simple, to create something, anything, and put it on the web.
