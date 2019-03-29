@@ -2,18 +2,19 @@ version: 2
 jobs:
   build:
     docker:
-      - image: digitalgenius/alpine-node-aws
+      - image: node:10.15.3-alpine
     steps:
       - checkout
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
             - v1-dependencies-
-      - run: apk add git
+      - run: apk --no-progress add --no-cache py-pip git
       - run: yarn install
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: yarn build
+      - run: pip -q install awscli
       - run: aws s3 sync public/ s3://nikmouz.dev --delete
