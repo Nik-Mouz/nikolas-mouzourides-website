@@ -65,24 +65,25 @@ const Header = (props: HeaderProps) => {
                   <ListItemText primary="Blog"/>
                 </ListItem>
               </Link>
-              <a href="https://www.github.com/mouzourides">
-                <ListItem button key="GitHub">
-                  <ListItemText primary="GitHub"/>
-                </ListItem>
-              </a>
+              <Divider/>
               <a href="mailto:***REMOVED***">
                 <ListItem button key="Email">
                   <ListItemText primary="Email"/>
                 </ListItem>
               </a>
-              <a href="https://twitter.com/Nik_Mouz">
+              <a href="https://www.github.com/mouzourides" target="_blank">
+                <ListItem button key="GitHub">
+                  <ListItemText primary="GitHub"/>
+                </ListItem>
+              </a>
+              <a href="https://twitter.com/Nik_Mouz" target="_blank">
                 <ListItem button key="Twitter">
                   <ListItemText primary="Twitter"/>
                 </ListItem>
               </a>
-              <a href="https://www.linkedin.com/in/nikolas-mouzourides-894b45113/">
+              <a href="https://www.linkedin.com/in/nikolas-mouzourides-894b45113/" target="_blank">
                 <ListItem button key="LinkedIn">
-                  <ListItemText primary="LinkedIn"/>
+                  <ListItemText primary="Linkedin"/>
                 </ListItem>
               </a>
               <Divider/>
