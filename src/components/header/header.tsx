@@ -33,7 +33,12 @@ const Header = (props: HeaderProps) => {
         <div className="nav-icons no-display-mobile">
           <SocialMediaIcons/>
         </div>
-        <IconButton className="menu-icon" color="inherit" aria-label="Menu" onClick={() => {
+        <IconButton
+          className="menu-icon"
+          color="inherit"
+          data-acctest="mobile-menu"
+          aria-label="Menu"
+          onClick={() => {
           setOpen(!open);
         }}>
           <img src={MenuIcon} alt="Menu icon"/>
@@ -45,6 +50,7 @@ const Header = (props: HeaderProps) => {
         open={open}
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
+        data-acctest="mobile-drawer"
       >
         <div
           className="drawer"
@@ -87,7 +93,10 @@ const Header = (props: HeaderProps) => {
                 </ListItem>
               </a>
               <Divider/>
-              <ListItem button key="Close" onClick={() => setOpen(false)}>
+              <ListItem button key="Close"
+                        data-acctest="drawer-close"
+                        onClick={() => setOpen(false)}
+              >
                 <ListItemText primary="Close"/>
               </ListItem>
             </List>
