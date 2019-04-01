@@ -105,8 +105,11 @@ modules.xml
 .idea
 .idea/misc.xml
 *.ipr
+
+# End of https://www.gitignore.io/api/intellij,intellij+iml
+
 app/css
 .cache
 public/
-
-# End of https://www.gitignore.io/api/intellij,intellij+iml
+**/examples
+**/videos

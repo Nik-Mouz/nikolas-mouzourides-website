@@ -5,40 +5,40 @@
   "author": "Nik Mouzourides <***REMOVED***>",
   "dependencies": {
     "@material-ui/core": "^3.9.2",
+    "@types/react-helmet": "^5.0.8",
     "bootstrap": "^4.3.1",
     "gatsby": "^2.1.27",
     "gatsby-image": "^2.0.31",
     "prop-types": "^15.7.2",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
-    "react-helmet": "^5.2.0",
-    "@types/react-helmet": "^5.0.8"
+    "react-helmet": "^5.2.0"
   },
   "devDependencies": {
-    "node-sass": "^4.11.0",
-    "prettier": "^1.16.4",
-    "typescript": "^3.3.3333",
-    "gatsby-plugin-sass": "^2.0.10",
+    "cypress": "^3.2.0",
     "gatsby-plugin-favicon": "^3.1.5",
     "gatsby-plugin-manifest": "^2.0.22",
     "gatsby-plugin-material-ui": "^1.2.4",
     "gatsby-plugin-offline": "^2.0.24",
     "gatsby-plugin-react-helmet": "^3.0.8",
+    "gatsby-plugin-sass": "^2.0.10",
     "gatsby-plugin-sharp": "^2.0.25",
     "gatsby-plugin-typescript": "^2.0.10",
     "gatsby-plugin-typescript-checker": "^1.0.3",
     "gatsby-source-filesystem": "^2.0.28",
     "gatsby-transformer-remark": "^2.3.8",
-    "gatsby-transformer-sharp": "^2.1.15"
+    "gatsby-transformer-sharp": "^2.1.15",
+    "node-sass": "^4.11.0",
+    "prettier": "^1.16.4",
+    "typescript": "^3.3.3333"
   },
   "license": "MIT",
   "scripts": {
     "build": "gatsby build",
-    "develop": "gatsby develop",
-    "format": "prettier --write src/**/*.{js,jsx}",
-    "start": "npm run develop",
+    "start": "gatsby develop",
     "serve": "gatsby serve",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\""
+    "test": "cypress run",
+    "cypress:open": "cypress open"
   },
   "repository": {
     "type": "git",
