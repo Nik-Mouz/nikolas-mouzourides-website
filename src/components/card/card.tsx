@@ -17,7 +17,7 @@ interface CardProps {
 
 const BlogCard = (props: CardProps) => (
   <>
-    <Card className="card mb-4" data-blog-card="AT-blog-card">
+    <Card className="card mb-4" data-acctest="blog-card">
       <CardActionArea href={props.url}>
         <CardMedia title="Card"/>
         <Img className="img-fluid" style={{ height: 200 }} fadeIn={true} fluid={props.image}/>
