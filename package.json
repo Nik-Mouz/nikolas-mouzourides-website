@@ -30,7 +30,8 @@
     "gatsby-transformer-sharp": "^2.1.15",
     "node-sass": "^4.11.0",
     "prettier": "^1.16.4",
-    "typescript": "^3.3.3333"
+    "typescript": "^3.3.3333",
+    "wait-on": "^3.2.0"
   },
   "license": "MIT",
   "scripts": {
@@ -38,6 +39,7 @@
     "start": "gatsby develop",
     "serve": "gatsby serve",
     "test": "cypress run",
+    "wait": "wait-on --timout 10000 http://localhost:8000 && echo 'App is running!'",
     "cypress:open": "cypress open"
   },
   "repository": {
