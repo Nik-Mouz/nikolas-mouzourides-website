@@ -16,5 +16,6 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: yarn build
+      - run: yarn serve & yarn wait && yarn test
       - run: pip -q install awscli
       - run: aws s3 sync public/ s3://nikmouz.dev --delete
