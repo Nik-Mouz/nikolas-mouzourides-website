@@ -37,9 +37,9 @@
   "scripts": {
     "build": "gatsby build",
     "start": "gatsby develop",
-    "serve": "gatsby serve",
+    "serve": "gatsby serve -p 8000",
     "test": "cypress run",
-    "wait": "wait-on --timout 10000 http://localhost:8000 && echo 'App is running!'",
+    "wait": "wait-on --timout 60000 http://localhost:8000 && echo 'nikmouz.dev is running!' || echo 'nikmouz.dev failed to start'",
     "cypress:open": "cypress open"
   },
   "repository": {
