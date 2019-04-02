@@ -8,12 +8,13 @@ describe("Blog cards should be", () => {
       .should("lte", 3);
   });
 
-  it("equal to the amount of blogs in the blogs directory on the blogs page", async () => {
+  it("equal to the amount of blogs in the blogs directory on the blogs page", () => {
     cy.visit("/blog");
 
-    const amount = await cy.task("getBlogsInFileSystem");
-    cy.get("[data-acctest='blog-card']")
-      .its("length")
-      .should("eq", amount);
+    cy.task("getBlogsInFileSystem").then((amount) => {
+      cy.get("[data-acctest='blog-card']")
+        .its("length")
+        .should("eq", amount);
+    });
   });
 });
