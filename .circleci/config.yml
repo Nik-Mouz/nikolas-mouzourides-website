@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: node:10.15.3-alpine
+      - image: node:10.15.3-stretch
         environment:
           ## this enables colors in the output
           TERM: xterm
@@ -12,14 +12,15 @@ jobs:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
             - v1-dependencies-
-      - run: apk --no-progress add --no-cache py-pip git
       - run: yarn install
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: yarn build
-      - run: apk --no-progress add --no-cache xvfb
+      - run: apt-get install -y libgtk2.0-0 libnotify-dev libgconf-2-4 libnss3 \ 
+             libxss1 libasound2 xvfb
       - run: yarn serve & yarn wait && yarn test
+      - run: apt install -y python-pip 
       - run: pip -q install awscli
       - run: aws s3 sync public/ s3://nikmouz.dev --delete
