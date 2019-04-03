@@ -13,8 +13,9 @@ const Blog = (props: BlogProps) => {
       <Seo title="Blog" description="Nik Mouzourides blog"/>
       <h1 className="pb-2">Blog</h1>
       <div className="d-flex flex-row flex-wrap">
-        {posts.map((post) =>
-          <BlogCard title={post.node.frontmatter.title}
+        {posts.map((post, idx) =>
+          <BlogCard key={"blog-" + idx}
+                    title={post.node.frontmatter.title}
                     url={post.node.frontmatter.path}
                     description={post.node.frontmatter.description}
                     image={post.node.frontmatter.hero.childImageSharp.fluid}

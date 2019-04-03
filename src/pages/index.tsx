@@ -35,8 +35,9 @@ const IndexPage = (props: BlogProps) => {
         </p>
         <h1>Recent Activity</h1>
         <div className="d-flex flex-row flex-wrap">
-          {posts.map((post) =>
-            <BlogCard title={post.node.frontmatter.title}
+          {posts.map((post, idx) =>
+            <BlogCard key={"recent-blogs-" + idx}
+                      title={post.node.frontmatter.title}
                       description={post.node.frontmatter.description}
                       url={post.node.frontmatter.path}
                       image={post.node.frontmatter.hero.childImageSharp.fluid}/>
