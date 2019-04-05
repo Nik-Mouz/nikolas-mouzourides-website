@@ -21,7 +21,7 @@ const Header = (props: HeaderProps) => {
   return (
     <div className="header d-flex justify-content-between">
       <div className="d-flex flex-row">
-        <Typography className="logo font-weight-bolder" variant="display1" color="inherit">
+        <Typography className="logo font-weight-bolder" variant="h4" color="inherit">
           <Link to="/">{props.title} </Link>
         </Typography>
         <h3 className="logo separator font-weight-bold no-display-mobile">|</h3>

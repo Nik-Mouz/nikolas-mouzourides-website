@@ -1,5 +1,4 @@
 import React from "react";
-import CardMedia from "@material-ui/core/es/CardMedia/CardMedia";
 import CardActionArea from "@material-ui/core/es/CardActionArea/CardActionArea";
 import CardContent from "@material-ui/core/es/CardContent/CardContent";
 import Typography from "@material-ui/core/es/Typography/Typography";
@@ -19,7 +18,6 @@ const BlogCard = (props: CardProps) => (
   <>
     <Card className="card mb-4" data-acctest="blog-card">
       <CardActionArea href={props.url}>
-        <CardMedia title="Card"/>
         <Img className="img-fluid" style={{ height: 200 }} fadeIn={true} fluid={props.image}/>
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
