@@ -12,19 +12,13 @@ jobs:
           keys:
             - v3-dependencies-{{ checksum "package.json" }}
             - v3-dependencies-
-      - restore_cache:
-          keys:
-            - v3-cypress-binary
       - run: yarn install
       - save_cache:
           paths:
             - node_modules
           key: v3-dependencies-{{ checksum "package.json" }}
-      - save_cache:
-          paths:
-            - /root/.cache/Cypress/3.2.0/Cypress/Cypress
-          key: v3-cypress-binary
       - run: yarn build
+      - run: yarn run cypress install
       - run: yarn serve & yarn wait && yarn test
       - run: apt install -y python-pip
       - run: pip -q install awscli
