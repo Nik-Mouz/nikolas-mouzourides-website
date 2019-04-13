@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: node:10.15.3-stretch
+      - image: cypress/base:10.15.3
         environment:
           ## this enables colors in the output
           TERM: xterm
@@ -12,18 +12,12 @@ jobs:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
             - v1-dependencies-
-            - cypress
       - run: yarn install
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-      - save_cache:
-          paths:
-            - /root/.cache/Cypress
-          key: cypress
       - run: yarn build
-      - run: apt-get update && apt-get install -y libgtk2.0-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 xvfb
       - run: yarn serve & yarn wait && yarn test
       - run: apt install -y python-pip
       - run: pip -q install awscli
