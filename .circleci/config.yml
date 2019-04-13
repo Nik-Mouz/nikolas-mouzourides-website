@@ -14,7 +14,7 @@ jobs:
             - v1-dependencies-
       - restore_cache:
           keys:
-            - cypress
+            - cypress-binary
       - run: yarn install
       - save_cache:
           paths:
@@ -22,8 +22,8 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
       - save_cache:
           paths:
-            - /root/.cache/Cypress/**
-          key: cypress
+            - /root/.cache/Cypress/3.2.0/Cypress/Cypress
+          key: cypress-binary
       - run: yarn build
       - run: yarn serve & yarn wait && yarn test
       - run: apt install -y python-pip
