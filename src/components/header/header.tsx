@@ -24,7 +24,6 @@ const Header = (props: HeaderProps) => {
         <Typography className="logo font-weight-bolder" variant="h4" color="inherit">
           <Link to="/">{props.title} </Link>
         </Typography>
-        <h3 className="logo separator font-weight-bold no-display-mobile">|</h3>
         <Typography className="nav-heading pr-5 mr-3 no-display-mobile" variant="h5" color="inherit">
           <Link to="/blog">Blog</Link>
         </Typography>

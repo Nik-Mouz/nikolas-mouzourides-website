@@ -10,10 +10,8 @@
   z-index: 1;
 
   .nav-heading {
-    font-family: 'Anonymous Pro', monospace;
-    font-weight: bold;
-    font-size: 32px;
-    line-height: 46px;
+    font-size: 30px;
+    line-height: 48px;
   }
 
   .separator {
@@ -21,8 +19,9 @@
   }
 
   .logo {
-    padding-right: 2rem;
-    line-height: 43px;
+    font-size: 32px;
+    padding-right: 3.5rem;
+    line-height: 48px;
     a {
       color: white;
       text-decoration: none;
