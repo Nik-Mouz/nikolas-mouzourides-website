@@ -28,4 +28,4 @@ jobs:
       - run: yarn serve & yarn wait && yarn test
       - run: apt install -y python-pip
       - run: pip -q install awscli
-      - run: aws s3 sync public/ s3://nikmouz.dev --delete
+      - run: aws s3 sync --delete --no-progress public/ s3://nikmouz.dev
