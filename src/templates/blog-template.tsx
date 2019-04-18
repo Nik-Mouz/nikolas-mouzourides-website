@@ -22,9 +22,9 @@ const BlogTemplate = (props: Props) => {
     <>
       <Layout heroImage={hero}>
         <Seo title={frontmatter.title} description={frontmatter.description}/>
-        <h1 className="pb-2">{frontmatter.title}</h1>
+        <h1 className="mb-0 pb-0">{frontmatter.title}</h1>
         <span>{frontmatter.date}</span>
-        <div
+        <div className="mt-3"
           dangerouslySetInnerHTML={{ __html: html }}
         />
       </Layout>
