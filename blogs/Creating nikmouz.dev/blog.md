@@ -12,7 +12,7 @@ Becoming caught in a cycle of renewing the domain, hoping to one day find the ti
 I thought back to my history of attempting to create a personal website...
 
 ## History
-On 25th November 2007 I created a github repository named [nikolas-mouzourides-website](https://github.com/Mouzourides/nikolas-mouzourides-website) with the intention of creating a personal website.
+On 25th November 2017 I created a github repository named [nikolas-mouzourides-website](https://github.com/Mouzourides/nikolas-mouzourides-website) with the intention of creating a personal website.
 My first attempt was during my first months as a software developer, at the time I was working on a project building a website for [Thomas Cook](https://www.blackpepper.co.uk/projects/thomas-cook-money).
 The project mainly consisted of wrangling with CSS and Gulp. I always found that playing with a side project with a similar tech stack to what I am working on 
 severely increased my productivity at work, so naturally I chose to create my first version of my personal website using plain HTML, CSS built with Gulp. 
