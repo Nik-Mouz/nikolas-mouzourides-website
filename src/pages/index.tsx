@@ -21,13 +21,12 @@ const IndexPage = (props: BlogProps) => {
           My original goal for this website was simple, to create something, anything, and put it on the web.
           On 4th March 2019, nikmouz.dev was born.
           It was a basic website only containing the text "Hello world by Nikolas Mouzourides",
-          however it made me happy; not because it was difficult to do, it didn't take me long,
-          but due to having something on the web that was my own.
+          however it excited me; I had a corner of the web that was my own.
         </p>
         <p>
           Having achieved this, I realised this website had the potential to be
           so much more. It had my name on it. I wanted this website to better reflect my ability as a software
-          developer, a place to tie together my interests, a portal into my world.
+          developer, a place to tie together my interests, a void to shout into.
           And so I deployed nikmouz.dev v2, with improved UX and a blog.
         </p>
         <p>
