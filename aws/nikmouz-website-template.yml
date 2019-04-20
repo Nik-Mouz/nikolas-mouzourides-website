@@ -1,0 +1,89 @@
+# Based off this template:
+# https://github.com/awslabs/aws-cloudformation-templates/blob/master/aws/services/S3/S3_Website_With_CloudFront_Distribution.yaml
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Website infrastructure template for nikmouz.dev'
+Parameters:
+  HostedZone:
+    Type: String
+    Default: 'nikmouz.dev'
+    Description: The DNS name of an existing Amazon Route 53 hosted zone
+    AllowedPattern: (?!-)[a-zA-Z0-9-.]{1,63}(?<!-)
+    ConstraintDescription: must be a valid DNS zone name.
+  Certificate:
+    Type: String
+    Description: The Acm Certificate Arn value
+
+Resources:
+  WebsiteS3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref 'HostedZone'
+      AccessControl: PublicRead
+      WebsiteConfiguration:
+        IndexDocument: index.html
+        ErrorDocument: 404.html
+
+  BucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref WebsiteS3Bucket
+      PolicyDocument:
+        Statement:
+          - Effect: Allow
+            Action: s3:GetObject
+            Resource: !Sub "${WebsiteS3Bucket.Arn}/*"
+            Principal: '*'
+
+  WebsiteCDN:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Aliases:
+          - !Ref 'HostedZone'
+          - !Join ['', ['www', ., !Ref 'HostedZone']]
+        Enabled: 'true'
+        DefaultCacheBehavior:
+          ForwardedValues:
+            QueryString: 'true'
+          TargetOriginId: only-origin
+          ViewerProtocolPolicy: allow-all
+        DefaultRootObject: index.html
+        Origins:
+          - CustomOriginConfig:
+              HTTPPort: '80'
+              HTTPSPort: '443'
+              OriginProtocolPolicy: http-only
+            DomainName: !Join ['', [!Ref 'WebsiteS3Bucket', '.s3-website-eu-west-1.amazonaws.com']]
+            Id: only-origin
+        PriceClass: PriceClass_100
+        ViewerCertificate:
+          AcmCertificateArn: !Ref 'Certificate'
+          MinimumProtocolVersion: TLSv1.1_2016
+          SslSupportMethod: sni-only
+
+  WebsiteRecordSets:
+    Type: AWS::Route53::RecordSetGroup
+    Properties:
+      HostedZoneName: !Join ['', [!Ref 'HostedZone', .]]
+      RecordSets:
+        - Name: !Ref 'HostedZone'
+          Type: A
+          AliasTarget:
+            HostedZoneId: Z2FDTNDATAQYW2
+            DNSName: !GetAtt [WebsiteCDN, DomainName]
+        - Name: !Join ['', ['www', ., !Ref 'HostedZone']]
+          Type: A
+          AliasTarget:
+            HostedZoneId: Z2FDTNDATAQYW2
+            DNSName: !GetAtt [WebsiteCDN, DomainName]
+
+Outputs:
+  WebsiteURL:
+    Value: !Join ['', ['https://', 'www', ., !Ref 'HostedZone']]
+    Description: nikmouz website URL
+  S3EndpointURL:
+    Value: !Join ['', [!Ref 'WebsiteS3Bucket', '.s3-website.eu-west-1.amazonaws.com']]
+    Description: S3 Endpoint
+  CloudFrontEndpointURL:
+    Value: !GetAtt [WebsiteCDN, DomainName]
+    Description: CloudFront Endpoint
