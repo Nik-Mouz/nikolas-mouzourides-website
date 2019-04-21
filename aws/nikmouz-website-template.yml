@@ -34,6 +34,12 @@ Resources:
             Resource: !Sub "${WebsiteS3Bucket.Arn}/*"
             Principal: '*'
 
+  WebsiteLogsBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Join ['', [!Ref 'HostedZone', '-logs']]
+      AccessControl: BucketOwnerFullControl
+
   WebsiteCDN:
     Type: AWS::CloudFront::Distribution
     Properties:
@@ -48,6 +54,10 @@ Resources:
           TargetOriginId: only-origin
           ViewerProtocolPolicy: allow-all
         DefaultRootObject: index.html
+        Logging:
+          Bucket: !GetAtt [WebsiteLogsBucket, DomainName]
+          IncludeCookies: 'true'
+          Prefix: 'nikmouz.dev'
         Origins:
           - CustomOriginConfig:
               HTTPPort: '80'
