@@ -40,6 +40,15 @@ Resources:
       BucketName: !Join ['', [!Ref 'HostedZone', '-logs']]
       AccessControl: BucketOwnerFullControl
 
+  WebsiteRedirectBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Join ['', ['www.', !Ref 'HostedZone']]
+      WebsiteConfiguration:
+        RedirectAllRequestsTo:
+          HostName: 'nikmouz.dev'
+          Protocol: 'https'
+
   WebsiteCDN:
     Type: AWS::CloudFront::Distribution
     Properties:
