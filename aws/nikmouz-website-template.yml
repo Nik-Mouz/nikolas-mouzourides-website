@@ -11,6 +11,7 @@ Parameters:
     ConstraintDescription: must be a valid DNS zone name.
   Certificate:
     Type: String
+    Default: 'arn:aws:acm:eu-west-1:005405328181:certificate/c346f805-c3aa-462b-a483-909112c10d64'
     Description: The Acm Certificate Arn value
 
 Resources:
@@ -31,7 +32,7 @@ Resources:
         Statement:
           - Effect: Allow
             Action: s3:GetObject
-            Resource: !Sub "${WebsiteS3Bucket.Arn}/*"
+            Resource: !Sub '${WebsiteS3Bucket.Arn}/*'
             Principal: '*'
 
   WebsiteLogsBucket:
@@ -57,7 +58,7 @@ Resources:
         Logging:
           Bucket: !GetAtt [WebsiteLogsBucket, DomainName]
           IncludeCookies: 'true'
-          Prefix: 'nikmouz.dev'
+          Prefix: !Ref 'HostedZone'
         Origins:
           - CustomOriginConfig:
               HTTPPort: '80'
@@ -70,6 +71,55 @@ Resources:
           AcmCertificateArn: !Ref 'Certificate'
           MinimumProtocolVersion: TLSv1.1_2016
           SslSupportMethod: sni-only
+
+  LambdaRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Action:
+              - sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+      Policies:
+        - PolicyName: WebsiteRedirectLambdaPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Action:
+                  - logs:*
+                Resource: arn:aws:logs:*:*:*
+                Effect: Allow
+
+  WebsiteRedirectLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: redirect-www-to-naked
+      Description: Redirect www subdomain to naked
+      Runtime: nodejs8.10
+      Role: !GetAtt 'LambdaRole.Arn'
+      Handler: index.handler
+      Code:
+        ZipFile: |
+          exports.handler = async (event) => {
+            console.log("Event:", JSON.stringify(event));
+
+            // Removes www subdomain from host
+            const host = event.headers.Host.replace(new RegExp("^www\."), "");
+
+            const location = `https://${host}${event.path}`;
+            console.log("Redirecting to: " + location);
+
+            const response = {
+            statusCode: 301,
+            headers: { location, "content-type": "text/html" }
+            };
+
+            return response;
+          };
 
   WebsiteRecordSets:
     Type: AWS::Route53::RecordSetGroup
