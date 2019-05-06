@@ -138,17 +138,30 @@ Resources:
         Types:
           - REGIONAL
 
-  RedirectResource:
+  RootRedirectMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      ResourceId: !GetAtt 'RedirectApiGateway.RootResourceId'
+      RestApiId: !Ref 'RedirectApiGateway'
+      ApiKeyRequired: false
+      AuthorizationType: NONE
+      HttpMethod: GET
+      Integration:
+        Type: AWS_PROXY
+        IntegrationHttpMethod: POST
+        Uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${WebsiteRedirectLambda.Arn}/invocations"
+
+  PathRedirectResource:
     Type: AWS::ApiGateway::Resource
     Properties:
       RestApiId: !Ref 'RedirectApiGateway'
       ParentId: !GetAtt 'RedirectApiGateway.RootResourceId'
       PathPart: '{proxy+}'
 
-  RedirectMethod:
+  PathRedirectMethod:
     Type: AWS::ApiGateway::Method
     Properties:
-      ResourceId: !Ref 'RedirectResource'
+      ResourceId: !Ref 'PathRedirectResource'
       RestApiId: !Ref 'RedirectApiGateway'
       ApiKeyRequired: false
       AuthorizationType: NONE
@@ -181,7 +194,8 @@ Resources:
       RestApiId: !Ref 'RedirectApiGateway'
       StageName: production
     DependsOn:
-      - RedirectMethod
+      - RootRedirectMethod
+      - PathRedirectMethod
 
   WebsiteRecordSets:
     Type: AWS::Route53::RecordSetGroup
