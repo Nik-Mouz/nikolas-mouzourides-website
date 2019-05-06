@@ -1,18 +1,19 @@
 # Based off this template:
 # https://github.com/awslabs/aws-cloudformation-templates/blob/master/aws/services/S3/S3_Website_With_CloudFront_Distribution.yaml
+# and this lambda:
+# https://github.com/blueimp/aws-lambda
 AWSTemplateFormatVersion: '2010-09-09'
-Description: 'Website infrastructure template for nikmouz.dev'
+Description: 'Infrastructure template for a static website'
 Parameters:
   HostedZone:
     Type: String
-    Default: 'nikmouz.dev'
     Description: The DNS name of an existing Amazon Route 53 hosted zone
     AllowedPattern: (?!-)[a-zA-Z0-9-.]{1,63}(?<!-)
     ConstraintDescription: must be a valid DNS zone name.
   Certificate:
     Type: String
-    Default: 'arn:aws:acm:eu-west-1:005405328181:certificate/c346f805-c3aa-462b-a483-909112c10d64'
     Description: The Acm Certificate Arn value
+    AllowedPattern: "^arn:aws:acm:[a-z0-9-]+:[0-9]+:certificate/[0-9a-f-]+$"
 
 Resources:
   WebsiteS3Bucket:
@@ -47,7 +48,6 @@ Resources:
       DistributionConfig:
         Aliases:
           - !Ref 'HostedZone'
-          - !Join ['', ['www', ., !Ref 'HostedZone']]
         Enabled: 'true'
         DefaultCacheBehavior:
           ForwardedValues:
@@ -56,7 +56,7 @@ Resources:
           ViewerProtocolPolicy: allow-all
         DefaultRootObject: index.html
         Logging:
-          Bucket: !GetAtt [WebsiteLogsBucket, DomainName]
+          Bucket: !GetAtt 'WebsiteLogsBucket.DomainName'
           IncludeCookies: 'true'
           Prefix: !Ref 'HostedZone'
         Origins:
@@ -98,7 +98,7 @@ Resources:
     Type: AWS::Lambda::Function
     Properties:
       FunctionName: redirect-www-to-naked
-      Description: Redirect www subdomain to naked
+      Description: Redirects www subdomain to naked
       Runtime: nodejs8.10
       Role: !GetAtt 'LambdaRole.Arn'
       Handler: index.handler
@@ -114,12 +114,74 @@ Resources:
             console.log("Redirecting to: " + location);
 
             const response = {
-            statusCode: 301,
-            headers: { location, "content-type": "text/html" }
+              statusCode: 301,
+              headers: { location, "content-type": "text/html" }
             };
 
             return response;
           };
+
+  LambdaPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !Ref 'WebsiteRedirectLambda'
+      Principal: apigateway.amazonaws.com
+
+  RedirectApiGateway:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      Name: redirect-www-to-naked-API
+      BinaryMediaTypes:
+        - '*/*'
+      EndpointConfiguration:
+        Types:
+          - REGIONAL
+
+  RedirectResource:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      RestApiId: !Ref 'RedirectApiGateway'
+      ParentId: !GetAtt 'RedirectApiGateway.RootResourceId'
+      PathPart: '{proxy+}'
+
+  RedirectMethod:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      ResourceId: !Ref 'RedirectResource'
+      RestApiId: !Ref 'RedirectApiGateway'
+      ApiKeyRequired: false
+      AuthorizationType: NONE
+      HttpMethod: GET
+      Integration:
+        Type: AWS_PROXY
+        IntegrationHttpMethod: POST
+        Uri: !Sub "arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${WebsiteRedirectLambda.Arn}/invocations"
+
+  DomainName:
+    Type: AWS::ApiGateway::DomainName
+    Properties:
+      DomainName: !Join ['', ['www', ., !Ref 'HostedZone']]
+      EndpointConfiguration:
+        Types:
+          - REGIONAL
+      RegionalCertificateArn: 'arn:aws:acm:eu-west-1:005405328181:certificate/c346f805-c3aa-462b-a483-909112c10d64'
+
+  BasePathMapping:
+    Type: AWS::ApiGateway::BasePathMapping
+    DependsOn: Deployment
+    Properties:
+      DomainName: !Ref 'DomainName'
+      RestApiId: !Ref 'RedirectApiGateway'
+      Stage: production
+
+  Deployment:
+    Type: AWS::ApiGateway::Deployment
+    Properties:
+      RestApiId: !Ref 'RedirectApiGateway'
+      StageName: production
+    DependsOn:
+      - RedirectMethod
 
   WebsiteRecordSets:
     Type: AWS::Route53::RecordSetGroup
@@ -130,20 +192,20 @@ Resources:
           Type: A
           AliasTarget:
             HostedZoneId: Z2FDTNDATAQYW2
-            DNSName: !GetAtt [WebsiteCDN, DomainName]
+            DNSName: !GetAtt 'WebsiteCDN.DomainName'
         - Name: !Join ['', ['www', ., !Ref 'HostedZone']]
           Type: A
           AliasTarget:
-            HostedZoneId: Z2FDTNDATAQYW2
-            DNSName: !GetAtt [WebsiteCDN, DomainName]
+            HostedZoneId: !GetAtt 'DomainName.RegionalHostedZoneId'
+            DNSName: !GetAtt 'DomainName.RegionalDomainName'
 
 Outputs:
   WebsiteURL:
-    Value: !Join ['', ['https://', 'www', ., !Ref 'HostedZone']]
-    Description: nikmouz website URL
+    Value: !Join ['', ['https://', !Ref 'HostedZone']]
+    Description: Website URL
   S3EndpointURL:
     Value: !Join ['', [!Ref 'WebsiteS3Bucket', '.s3-website.eu-west-1.amazonaws.com']]
     Description: S3 Endpoint
   CloudFrontEndpointURL:
-    Value: !GetAtt [WebsiteCDN, DomainName]
+    Value: !GetAtt 'WebsiteCDN.DomainName'
     Description: CloudFront Endpoint
