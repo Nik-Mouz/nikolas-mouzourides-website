@@ -12,7 +12,7 @@ phases:
       - yarn serve & yarn wait && yarn test
   post_build:
     commands:
-      - aws s3 sync --delete --no-progress public/ s3://nikmouz.dev-test
+      - aws s3 sync --delete --no-progress public/ s3://nikmouz.dev
 cache:
   paths:
     - node_modules/**/*
