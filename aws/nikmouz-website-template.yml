@@ -1,7 +1,6 @@
 # Based off this template:
 # https://github.com/awslabs/aws-cloudformation-templates/blob/master/aws/services/S3/S3_Website_With_CloudFront_Distribution.yaml
-# and this lambda:
-# https://github.com/blueimp/aws-lambda
+# and this lambda: https://github.com/blueimp/aws-lambda
 AWSTemplateFormatVersion: '2010-09-09'
 Description: 'Infrastructure template for a static website'
 Parameters:
