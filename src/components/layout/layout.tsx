@@ -27,7 +27,7 @@ const Layout = (props: LayoutProps) => (
         <div className="h-100 d-flex justify-content-between flex-column">
           <div>
             <Header title={data.site.siteMetadata.title}/>
-            {props.heroImage && <Img className="hero" imgStyle={{objectFit: "cover", objectPosition: "bottom" }}
+            {props.heroImage && <Img className="hero" imgStyle={{objectFit: "cover", objectPosition: "center" }}
                                      fadeIn={true} fluid={props.heroImage}/>}
             <main className={props.heroImage ? 'container pt-3' : 'main container'}>{props.children}</main>
           </div>
