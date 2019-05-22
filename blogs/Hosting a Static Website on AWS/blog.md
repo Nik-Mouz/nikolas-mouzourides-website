@@ -23,12 +23,11 @@ Think about why you have chosen to host your static website on AWS, and if you c
 choose a previously mentioned simpler alternative. To be clear I think AWS is amazing and incredibly powerful, it's just not the simplest and the 
 quickest to get the ball rolling when standing up a serverless static website.
 
-
 ## Getting started
 Okay great, you're still reading so you have chosen AWS as the hosting platform for your shiny new static website. 
 We are going to be using the following AWS services: S3, Route 53, CloudFront and Certificate Manager.
 Don't be intimidated if you aren't familiar with these services or AWS in general; I will be explaining along the way
-what each of these services do, why we need them and how to configure them for our website.
+what each of these services do, why we need them and how to configure them for your website.
 
 ## Pricing
 In terms of pricing, each of the services we will be using are pretty cheap:
@@ -47,21 +46,21 @@ My AWS bill for this website thus far has been less than a pound per month.
 Let get started!
 
 ## S3
-The first task is to create an S3 Bucket to contain our static website files. "Amazon Simple Storage Service (Amazon S3) is storage for the internet.
+The first task is to create an S3 Bucket to contain your static website files. "Amazon Simple Storage Service (Amazon S3) is storage for the internet.
 You can use Amazon S3 to store and retrieve any amount of data at any time, from anywhere on the web."
 
 * Log into the AWS Console, select Services in the top navigation bar, (be blown away by the monstrous drop down menu
 that has appeared), and select S3.
 * To create a bucket, click the Create Bucket button, this will open a modal.
-* Enter into the name field the domain name we want our website to be accessible from e.g. `example.com`, S3 Bucket names must be globally unique.
+* Enter into the name field the domain name we want your website to be accessible from e.g. `example.com`, S3 Bucket names must be globally unique.
 * Then select a region from the dropdown, you want your bucket to reside in. I personally recommend EU (Ireland) as this region is powered by renewable energy.
 * Click next. Then next again. We aren't interested in configuring encryption, versioning or logs at this moment.
 * Next up, untick the checkbox that says "Block all public access". By default S3 Buckets are private which is probably a good idea as a default except 
-we want ours to be public so people can see our website content.
+we want yours to be public so people can see your website content.
 * Click Next. 
 * Finally select Create Bucket.
 
-We have ourselves an S3 Bucket! Next up we want to configure our Bucket as a website.
+You have yourself an S3 Bucket! Next up we want to configure your Bucket as a website.
 
 * Open the Bucket we just created and we'll be greeted with a tabbed screen,
 * Select the Properties tab.
@@ -90,17 +89,17 @@ Next we want to set a Bucket Policy. Buckets Policies are rules on how your S3 B
 
 This Policy is very simple, it allows all objects/ files in the Bucket to be accessible by everyone, which is the behaviour we want for a website.
 
-We have now finished the configuration for our S3 Bucket, lets upload our website files.
+We have now finished the configuration for your S3 Bucket, lets upload your website files.
 * Click the Overview tab, 
 * Select the Upload button,
 * Select your files and click the Upload button.
 
-Remember that URL I asked you to take note of? Type it into your browser and hey presto, your cake is served.
+Remember that URL I asked you to take note of? Type it into a web browser and hey presto, cake is served.
 Great! Done. Time to binge Netflix. Well... actually... don't you think it would be nice to have a more memorable domain name?
 
 ## Route 53
 "Amazon Route 53 provides highly available and scalable Domain Name System (DNS), domain name registration, and health-checking web services."
-We are going to use it to assign a custom domain name to our S3 Bucket. Back to the monstrous Services drop down menu we go.
+We are going to use it to assign a custom domain name to your S3 Bucket. Back to the monstrous Services drop down menu we go.
 
 * Select Route 53 in the Services dropdown menu. 
 
@@ -127,9 +126,9 @@ An Address record or A record is a type of DNS record type that maps a hostname 
 If it does not appear in the dropdown menu it's because your Record Set name is different to your Bucket's name.
 They must be the same. An alias basically says to AWS, "I'll let you find my IP address and make sure it's always mapped to this domain name". Handy. 
 
-Wait a few minutes and then type your fancy new domain into your browser.
+Wait a few minutes and then type your fancy new domain into a web browser.
 Boom. There's your website. Great! Okay now it's Netflix binging time... except... your browser says insecure next to your domain name.
-Not a great look. That's because your website is being loaded over the HTTP protocol, which means our connection to the site is not encrypted. We want to use HTTPS.
+Not a great look. That's because your website is being loaded over the HTTP protocol, which means your connection to the site is not encrypted. We want to use HTTPS.
 Some of you may whine: "It's just a static website! You don't need HTTPS! No personal details of any kind will be transmitted over the unencrypted connection".
 The truth is, you should always configure your site to use HTTPS. Why? It confirms the integrity of the website, you know that the webpage has not been tampered
 with by a man-in-the-middle, which is entirely possible when connecting to an unknown WiFi network. Many modern web features such as 
@@ -138,9 +137,9 @@ service workers and progressive web applications also will simply not work unles
 ## Certificate Manager
 "AWS Certificate Manager (ACM) handles the complexity of creating and managing public SSL/TLS certificates
 for your AWS based websites and applications."
-You can generate a new SSL certificate or even import a pre-existing certificate. It even deals with auto renewing our certificate which saves a lot of pain.
+You can generate a new SSL certificate or even import a pre-existing certificate. It even deals with auto renewing your certificate which saves a lot of pain.
 Certificate Manager is free but limited to 1000 certificates per account... if you exceed this I will be very impressed.
-We are going to use ACM to generate our SSL certificate.
+We are going to use ACM to generate your SSL certificate.
 
 * Click Certificate Manager in the Services dropdown menu.
 * Click on the region dropdown in the top navigation bar and switch your region to US East (N. Virginia), I will explain why later.
@@ -155,7 +154,7 @@ this will give you a lot of flexibility.
 * Enter your domain names in the input field, adding additional domain names with the Add another name to this certificate button and then click next
 
 Next we will be required validate that we actually own the domain name we are registering a certificate for, to stop us impersonating another site.
-There are two options, DNS Validation and Email Validation, we will be selecting DNS Validation, because with our Hosted Zone already created,
+There are two options, DNS Validation and Email Validation, we will be selecting DNS Validation, because with your Hosted Zone already created,
 it's incredibly quick and simple.
 
 * Select the DNS Validation radio button, select the Review button.
@@ -167,7 +166,7 @@ you must do this for each listed domain.
 
 From here all you have to do is wait until Amazon validates that you actually own your domain by looking for those CNAME records. This should not take too long.
 Go make yourself a coffee. Once your domain has been validated, you will have successfully generated an SSL Certificate, sitting there ready to use!
-You can also remove those CNAME records in Route 53 once Amazon has finished the validation process. Time to apply our SSL certificate.
+You can also remove those CNAME records in Route 53 once Amazon has finished the validation process. Time to apply your SSL certificate.
 Unfortunately S3 does not support HTTPS natively, in order to use HTTPS we must introduce another AWS service called CloudFront. 
 
 ## CloudFront
@@ -198,7 +197,7 @@ objects are cached, (useful if you're still doing active development on your web
 * Input your domain names in the Alternate Domain Names input field e.g. `example.com` and `www.example.com`
 * Select the custom SSL Certificate radio button and click on your generated certificate from the dropdown.
 
-CloudFront only supports certificates generated in the US East (N. Virginia) Region which is why we selected this region when generating our certificate.
+CloudFront only supports certificates generated in the US East (N. Virginia) Region which is why we selected this region when generating your certificate.
 
 * Enter index.html in the Default Root Object default input field. Note: this is only necessary if you didn't use the website S3 endpoint in the Origin Domain Name input field.
 * Hit the Create Distribution button.
@@ -210,7 +209,7 @@ Make yourself another coffee or make a cake and come back to it.
 * Once CloudFront has completed the deploy, visit your Hosted Zone in Route 53 and update your Record Set Alias Target via the dropdown menu
 from your S3 bucket, to your CloudFront distribution.
 
-If it is not in the dropdown menu, it is because your did not enter this Record Set name in the Alternative Domain Names input field when configuring CloudFront.
+If it is not in the dropdown menu, it is because you did not enter this Record Set name in the Alternative Domain Names input field when configuring CloudFront.
 Go update this field and then try again.
 
 * Hit Save Record Set, wait a moment and then enter your domain name into your web browser.
