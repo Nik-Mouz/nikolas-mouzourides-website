@@ -33,12 +33,12 @@ what each of these services do, why we need them and how to configure them for y
 In terms of pricing, each of the services we will be using are pretty cheap:
 
 * S3 is free for a year with 20,000 GET, PUT, COPY, LIST and POST requests;
-and past that is fractions of pennies, different per region, for storage and fetching of data.
+and past that is fractions of cent, different per region, for storage and fetching of data.
 You can find the exact amount for your region [here](https://aws.amazon.com/s3/pricing/).
 * Route 53 costs $0.50 per Hosted Zone;
 * Certificate Manager is free for public certificates;
 * CloudFront is free for the first year with 2,000,000 HTTP or HTTPS Requests each month
-and past that is fractions of pennies, different per region, for HTTP Methods (per 10,000) and Regional Data Transfer Out to Origin
+and past that is fractions of cent, different per region, for HTTP Methods (per 10,000) and Regional Data Transfer Out to Origin
 and Internet (per GB). You can find the exact amount for your region [here](https://aws.amazon.com/cloudfront/pricing/).
 
 My AWS bill for this website thus far has been less than a pound per month.
@@ -214,6 +214,6 @@ Go update this field and then try again.
 
 * Hit Save Record Set, wait a moment and then enter your domain name into your web browser.
 
-That's it! You've now successfully hosting a serverless static website on AWS.
+That's it! You've now successfully hosted a serverless static website on AWS.
 Feel free to contact me on Twitter if you run into any trouble, [@nikmouz](https://twitter.com/nik_mouz).
 You can finally go binge watch Netflix, I recommend BoJack Horseman.
