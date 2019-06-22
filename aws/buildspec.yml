@@ -5,16 +5,15 @@ phases:
       - apt update && apt install -y python-pip
       - pip -q install awscli
       - yarn install
-      - yarn run cypress install
   build:
     commands:
       - yarn build
-      - yarn serve & yarn wait && yarn test
+      - yarn test:ci
       - aws s3 sync --delete --no-progress public/ s3://nikmouz.dev
 artifacts:
   files:
-    - cypress/videos/*
-  name: test-videos-$(date +%Y-%m-%d)
+    - screenshots/**/*
+  name: test-screenshots-$(date +%Y-%m-%d %H:%M:%S %s)
 cache:
   paths:
     - node_modules/**/*

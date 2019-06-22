@@ -45,6 +45,7 @@ const Header = (props: HeaderProps) => {
       </div>
 
       <SwipeableDrawer
+        data-acctest="mobile-drawer"
         anchor="right"
         open={open}
         onClose={() => setOpen(false)}
@@ -56,7 +57,6 @@ const Header = (props: HeaderProps) => {
           role="button"
           onClick={() => setOpen(false)}
           onKeyDown={() => setOpen(false)}
-          data-acctest="mobile-drawer"
         >
           <div>
             <List>
