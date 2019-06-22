@@ -2,8 +2,6 @@ version: 0.2
 phases:
   install:
     commands:
-      - apt update && apt install -y python-pip
-      - pip -q install awscli
       - yarn install
   build:
     commands:
