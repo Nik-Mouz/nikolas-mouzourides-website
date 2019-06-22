@@ -14,7 +14,6 @@
     "react-helmet": "^5.2.0"
   },
   "devDependencies": {
-    "cypress": "^3.2.0",
     "gatsby-plugin-favicon": "^3.1.5",
     "gatsby-plugin-manifest": "^2.0.22",
     "gatsby-plugin-material-ui": "^1.2.4",
@@ -29,17 +28,17 @@
     "gatsby-transformer-sharp": "^2.1.15",
     "node-sass": "^4.11.0",
     "prettier": "^1.16.4",
-    "typescript": "^3.3.3333",
-    "wait-on": "^3.2.0"
+    "start-server-and-test": "^1.9.1",
+    "testcafe": "^1.2.1",
+    "typescript": "^3.3.3333"
   },
   "license": "MIT",
   "scripts": {
     "build": "gatsby build",
     "start": "gatsby develop",
     "serve": "gatsby serve -p 8000",
-    "test": "cypress run",
-    "wait": "wait-on --timout 60000 http://localhost:8000 && echo 'nikmouz.dev is running!' || echo 'nikmouz.dev failed to start'",
-    "cypress:open": "cypress open"
+    "test": "testcafe chrome:headless e2e/*.test.ts -S -s screenshots",
+    "test:ci": "yarn run start-test 'yarn serve' 'http://localhost:8000' 'yarn test'"
   },
   "repository": {
     "type": "git",
