@@ -10,9 +10,10 @@ phases:
     commands:
       - yarn build
       - yarn serve & yarn wait && yarn test
-  post_build:
-    commands:
       - aws s3 sync --delete --no-progress public/ s3://nikmouz.dev
+artifacts:
+  files:
+    - cypress/videos
 cache:
   paths:
     - node_modules/**/*
