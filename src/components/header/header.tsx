@@ -49,7 +49,6 @@ const Header = (props: HeaderProps) => {
         open={open}
         onClose={() => setOpen(false)}
         onOpen={() => setOpen(true)}
-        data-acctest="mobile-drawer"
       >
         <div
           className="drawer"
@@ -57,6 +56,7 @@ const Header = (props: HeaderProps) => {
           role="button"
           onClick={() => setOpen(false)}
           onKeyDown={() => setOpen(false)}
+          data-acctest="mobile-drawer"
         >
           <div>
             <List>
