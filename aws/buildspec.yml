@@ -13,7 +13,8 @@ phases:
       - aws s3 sync --delete --no-progress public/ s3://nikmouz.dev
 artifacts:
   files:
-    - cypress/videos
+    - cypress/videos/*
+  name: test-videos-$(date +%Y-%m-%d)
 cache:
   paths:
     - node_modules/**/*
