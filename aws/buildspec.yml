@@ -12,7 +12,7 @@ phases:
       - aws s3 sync --delete --no-progress public/ s3://nikmouz.dev
 artifacts:
   files:
-    - screenshots/**/*
+    - reports/**/*
   name: test-screenshots-$(date +%Y-%m-%d %H:%M:%S %s)
 cache:
   paths:
