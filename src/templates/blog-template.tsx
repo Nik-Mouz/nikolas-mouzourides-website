@@ -2,7 +2,6 @@ import * as React from "react";
 import { graphql } from "gatsby";
 import Seo from "../components/seo/seo";
 import Layout from "../components/layout/layout";
-import { FluidObject } from "gatsby-image";
 import { Frontmatter } from "../components/blog-props.state";
 
 interface Props {
@@ -24,8 +23,8 @@ const BlogTemplate = (props: Props) => {
         <Seo title={frontmatter.title} description={frontmatter.description}/>
         <h1 className="mb-0 pb-0">{frontmatter.title}</h1>
         <span>{frontmatter.date}</span>
-        <div className="mt-3"
-          dangerouslySetInnerHTML={{ __html: html }}
+        <div className="blog mt-3"
+             dangerouslySetInnerHTML={{ __html: html }}
         />
       </Layout>
     </>

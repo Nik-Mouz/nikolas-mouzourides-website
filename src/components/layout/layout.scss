@@ -23,6 +23,7 @@ html {
 .hero {
   height: 550px;
   width: 100%;
+
   img {
     height: 400px;
     width: 100%;
@@ -37,6 +38,13 @@ html {
 
 .main {
   margin-top: 5.5rem;
+}
+
+.blog {
+  img {
+    width: 100%;
+    height: auto;
+  }
 }
 
 article,
@@ -163,4 +171,10 @@ p {
   html {
     font-size: 100%;
   }
+}
+
+pre {
+  background-color: rgba(249, 249, 249, 0.46);
+  padding: 15px;
+  border-radius: 10px;
 }
