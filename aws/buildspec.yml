@@ -4,6 +4,7 @@ phases:
     runtime-versions:
       nodejs: 10
     commands:
+      - git log -1
       - yarn install
   build:
     commands:
