@@ -6,30 +6,30 @@ description: "A introduction to AWS Serverless Application Model (SAM)"
 hero: "./blog-hero.jpg"
 ---
 AWS Lambda is Amazon's function as a service, (FaaS), offering and recently I've been playing around with it.
-I've used Lambda in the past for really bite-sized applications, every time you visit my personal website,
-a Lambda redirects you to from https://www.nikmouz.dev to https://nikmouz.dev, however I've always been hesitant to use the technology to
-create anything too complex. There are a few reasons for this, I found it difficult to run and debug a Lambda
-locally in a manner comparable to a production like setting. Interact with other AWS resources locally without embedding 
+I've used Lambda in the past for really bite-sized applications, every time one visits my personal website on the `www` sub-domain,
+a Lambda redirects from https://www.nikmouz.dev to https://nikmouz.dev, however I've always been hesitant to use the technology to
+create anything too complex. There are a few reasons for this. I found it difficult to run and debug a Lambda
+locally in a manner comparable to a production like setting. Interacting with other AWS resources locally without embedding 
 AWS credentials in my code, risking accidentally committing them into source control is also a nuisance. 
 
 Then I discovered AWS SAM. AWS Serverless Application Model (SAM), is an open-source framework that focuses on providing
 developer friendly tools to create serverless applications on AWS. It utilises Docker to emulate an environment akin to a deployed AWS Lambda,
-allowing you to develop, run, test and deploy a serverless application with ease.
+allowing us to develop, run, test and deploy a serverless application with ease.
 In this blog I'm going to demonstrate how to get up and running with AWS SAM, its benefits and its weaknesses...
 
 ## Pre-reqs
-In order to play along, you'll need to install the following:
+In order to play along, install the following:
 
 - [AWS ClI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html)
 - [AWS SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html)
 - [Docker](https://docs.docker.com/install/)
 - [Node](https://nodejs.org/en/download/package-manager/)
 
-Ensure you have your AWS credentials set up by running `aws configure`.
+Ensure AWS credentials are set up by running `aws configure`.
 
 ## Getting Started
 Initialise a sample AWS SAM project by running `sam init`, this will create a new directory in your working directory named "sam-app".
-If you enter this directory, you will see the following files:
+If we enter this directory, we will see the following files:
 
 ```
 .
@@ -52,7 +52,7 @@ Java, C#, Powershell, Go, Ruby, and Python.
 
 ## Up and Running
 SAM bakes in best practise for AWS, it enforces the use of infrastructure as code using a wrapper of CloudFormation templates named SAM templates.
-If you open your SAM template: `template.yaml`, you'll see the following:
+If we open our SAM template: `template.yaml`, we'll see the following:
 
 ```
   HelloWorldFunction:               <-- Name of our function
@@ -69,17 +69,17 @@ If you open your SAM template: `template.yaml`, you'll see the following:
             Method: get             <-- Endpoint method
 ```
 
-This HelloWorldFunction is a really concise way of creating an API Gateway instance with our hello endpoint,
+This HelloWorldFunction resource is a really concise way of creating an API Gateway instance with our hello endpoint,
 a Lambda to execute our code and an IAM Role to allowing for the permissions to run the Lambda and write logs to CloudWatch. 
 
 Now that we understand what our SAM app is doing, lets run it!
 Run: `sam local start-api`, visit `http://localhost:3000/hello` and behold... hello world.
 
-Let's open our app.js file and change `hello world` to `greetings world`, save the file, then refresh `http://localhost:3000/hello` and
-watch your greeting change. Nice, no need to restart to server or any other nonsense for code changes,
+Let's open our app.js file and change "hello world" to "greetings world", save the file, then refresh `http://localhost:3000/hello` and
+watch the greeting change. Nice, no need to restart to server or any other nonsense for code changes,
 (restarting the server is required for changes to the template.yaml file however).
 
-So we can run our lambda locally and experience hot reloading on our code changes, this already severely beats my previous approach to
+So we can run our Lambda locally and experience hot reloading on our code changes, this already severely beats my previous approach to
 Lambda development where I had to manually upload my code changes to Lambda every time I wanted to run my application in a production like setting.
 
 ## Debugging 
@@ -87,10 +87,10 @@ AWS SAM also gives us the tools to debug our Lambdas, instead of entirely relyin
 The AWS Toolkit Plugin can be installed for a number of different IDEs/ text editors to make debugging easier e.g. Visual Studio Code, IntelliJ, PyCharm.
 Since we are creating our application using Node, my example here will be demonstrating debugging using Visual Studio Code,
 however AWS' [documentation](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-using-debugging.html)
-specifies in detail the process for other languages and IDEs.
+specifies in detail the process for other IDEs.
 
 To begin debugging our Lambdas in VSCode, first open the `sam-app` project in VSCode.
-Following this, you'll need to select to the Debug icon on the left toolbar, (or Ctrl+Shift+D).
+Following this, we'll need to select to the Debug icon on the left toolbar, (or Ctrl+Shift+D).
 Open the dropdown next to the text Debug and select Add Configuration. This will open up a text editor for `launch.json`, paste the following JSON:
 
 ```
@@ -113,38 +113,40 @@ Open the dropdown next to the text Debug and select Add Configuration. This will
 }
 ```
 
-Note: On the localRoot property, `hello-world` should be changed to the name of the directory containing your Lambda application code.
+Note: On the `localRoot` property, "hello-world" should be changed to the name of the directory containing our Lambda application code.
 
-Then run your Lambdas locally with the debug flag at port 5858: `sam local start-api -d 5858`.
-Once this is running, add a breakpoint the line in your Lambda function you would like to debug, then hit the Play icon on the Attach to SAM CLI configuration you just added, 
-and finally invoke the function e.g. visit `http://localhost:3000/hello` and you can start debugging your Lambda in VSCode.
+Then run our Lambdas locally with the debug flag at port 5858: `sam local start-api -d 5858`.
+Once this is running, add a breakpoint to the line in our Lambda function, then hit the Play icon on the Attach to SAM CLI configuration we just added. 
+Finally invoke the function e.g. visit `http://localhost:3000/hello` and we can start debugging our Lambda within VSCode.
 
 This GIF on AWS documentation runs through the whole debugging process quite nicely.
 
 ![image](/sam-debug.gif)
 
 ## Deploying
-In order to deploy the application, you must create an S3 bucket to contain your application code along with its dependencies.
+In order to deploy the application, we must create an S3 bucket to contain our application code along with its dependencies.
 Run `aws s3 mb s3://BUCKET_NAME` to create an S3 bucket.
 
+Note: BUCKET_NAME should be replaced with a more suitable name.
+
 Next run: `sam package --output-template-file packaged.yaml --s3-bucket BUCKET_NAME`.
-This long command will do a few things, it will upload your your application code with its dependencies to your S3 bucket,
-knowing where it is located via the `CodeUri` property in your SAM template, then it will convert
-your SAM template to a CloudFormation template named `packaged.yaml` and updates the `CodeUri` property to point to your S3 bucket
-when your application code now resides. 
+This long command will do a few things, it will upload our application code with its dependencies to our S3 bucket,
+knowing where it is located via the `CodeUri` property in our SAM template, then it will convert
+our SAM template to a CloudFormation template named `packaged.yaml` and updates the `CodeUri` property to point to our S3 bucket
+when our application code now resides. 
 
 Finally run `sam deploy --template-file packaged.yaml --stack-name sam-app --capabilities CAPABILITY_IAM`. This command is a wrapper around
 the `aws cloudformation deploy` command and simply deploys a stack, in this case called sam-app, from the `packaged.yaml` template file
 with the permissions to create IAM resources and schedules our specified resources to be created.
 You can visit the CloudFormation page in the AWS Console to view the progress of resource creation. Once our resources have been 
-successfully created, you can click Outputs, then click on the url titled `HelloWorldApi` to execute your deployed Lambda. 
+successfully created, we can click Outputs, then click on the url titled `HelloWorldApi` to execute the deployed Lambda. 
 
 ## Interact with Other AWS Resources
 So we have deployed our application and greeted the world. Greeting the world is a little impersonal though,
 let's add DynamoDB so we can greet specific people by their real names! AWS SAM makes this really easy and allows us to 
 run our Lambda locally against AWS resources, without the need of AWS credentials.
 
-Add the following to your `template.yml` within the Resources section:
+Add the following to our `template.yml` within the Resources section:
 
 ```
   Resources:
@@ -166,16 +168,16 @@ Add the following to your `template.yml` within the Resources section:
 This will create a simple DynamoDB table with a single primary key. Before we continue, deploy these changes to actually create the DynamoDB table.
 Our Lambda will need it to actually exist in order to interact with it.
 
-Note: It is possible to run a dockerized version of DynamoDB locally and run your 
-Lambda locally against that, however AWS SAMs tooling does not help you with this and it is down to you to ensure the Lambda container and DynamoDB
+Note: It is possible to run a dockerized version of DynamoDB locally and run a
+Lambda locally against that, however AWS SAMs tooling does not help with this and it is down to you to ensure the Lambda container and DynamoDB
 container can actually see each other. You also would need to create conditional logic in your Lambda
 to connect to your local dockerized DynamoDB container if you are running the Lambda locally, else in producrion, connect to the real DynamoDB.
-I did experiment with this but concluded that it was just easier to run your Lambda locally against real AWS resources.
+I did experiment with this but concluded that it was just easier to run a Lambda locally against real AWS resources.
 
 Now we need an additional Lambda to write names of people that need to be greeted to this shiny new database.
 Since this Lambda needs to be able to write to our database, it needs the have appropriate IAM Role. Luckily AWS SAM makes this really simple.
 
-Add the following code to your `template.yml` in the resources section:
+Add the following code to our `template.yml` in the resources section:
 
 ```
   Resources:
@@ -197,11 +199,11 @@ Add the following code to your `template.yml` in the resources section:
               Method: post
 ```
 
-This will create a new API Gateway endpoint `/add-name` that will accept HTTP POST requests and runs the function `addName()` in app.js.
+This will create a new API Gateway endpoint `/add-name` that will accept HTTP POST requests and runs the function `addName` in app.js.
 Notice the Policy section, AWS SAM has a bunch of pre-canned policies for access to common services, like the one we defined on NamesTable
 for DynamoDB CRUD operations. You can view the other Policy Templates [here](https://github.com/awslabs/serverless-application-model/blob/master/docs/policy_templates.rst).
 
-Time to actually create our `addNames` function. Ensure you install the AWS SDK: `npm install aws-sdk`.
+Time to actually create our `addNames` function. First install the AWS SDK: `npm install aws-sdk`, then we can write the following code:.
 
 ```
 const AWS = require('aws-sdk');
@@ -307,17 +309,18 @@ Let's also add the URLs for our new endpoints in the Outputs section so we can e
 
 Now all is left to do is to deploy, get the URLs from the Outputs section in CloudFormation and try out our Lambdas in the wild.
 
-So here we have demonstrated that you can interact with AWS resources whilst running your Lambda locally, purely using IAM Roles.
-This approach is recommended by AWS themselves and eliminates the risk of misplacing your AWS credentials.
+So here we have demonstrated that we can interact with AWS resources whilst running Lambda locally, purely using IAM Roles.
+This approach is recommended by AWS themselves and eliminates the risk of misplacing AWS credentials.
 
 ## Conclusion
 There is no question that AWS SAM vastly improves developer experience when creating Lambdas. I can speak with certainty when exclaiming that all future Lambdas I personally
 work on will be creating via AWS SAM. This blog demonstrates the removal of my hesitations regarding running and debugging Lambdas locally in a manner comparable
 to production as well as interacting with other AWS resources locally without AWS credentials. So is it time to abandon tried and tested frameworks like Spring, Express and Django in
 favour of Lambda supported by AWS SAM? Like many aspects of software development, there isn't a clear cut yes or no answer to that question.
-I'd rather answer with a "sometimes...", trailing off and looking deep in thought. Lambda can be described as a function in the sky,
-and whilst this is an incredible feat in itself, it is not without weakness.
-It's just your standalone plain code. You do not get to enjoy the rich, crafted tooling a framework like Spring, Django and Express give you out of the box.
+I'd rather answer with a "sometimes...", trailing off and looking deep in thought. 
+
+Lambda can be described as a function in the sky, and whilst this is an incredible feat in itself, it is not without weakness.
+It's just standalone plain code. You do not get to enjoy the rich, crafted tooling a framework like Spring, Django and Express give out of the box.
 Common problems like dependency management and secret management become harder because they aren't solved for you. You have to go into the wild and find standalone dependencies 
 that meet your requirements or roll your own solution. Now this isn't so much an issue for every application, especially smaller scale applications, 
 but for larger scale applications, the appeal for the batteries included approach a framework provides is still attractive. 
