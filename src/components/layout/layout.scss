@@ -21,7 +21,7 @@ html {
 }
 
 .hero {
-  height: 550px;
+  height: 500px;
   width: 100%;
 
   img {
@@ -30,9 +30,15 @@ html {
     object-fit: cover;
     object-position: bottom !important;
 
-    @media (max-width: 731px) {
+    @media (max-width: 600px) {
       object-position: left !important;
     }
+  }
+}
+
+@media (max-width: 1024px) {
+  .hero {
+    height: 300px;
   }
 }
 
