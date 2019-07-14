@@ -28,7 +28,7 @@ In order to play along, install the following:
 Ensure AWS credentials are set up by running `aws configure`.
 
 ## Getting Started
-Initialise a sample AWS SAM project by running `sam init`, this will create a new directory in your working directory named "sam-app".
+Initialise a sample AWS SAM project by running `sam init`, this will create a new directory named "sam-app".
 If we enter this directory, we will see the following files:
 
 ```
@@ -69,8 +69,9 @@ If we open our SAM template: `template.yaml`, we'll see the following:
             Method: get             <-- Endpoint method
 ```
 
-This HelloWorldFunction resource is a really concise way of creating an API Gateway instance with our hello endpoint,
-a Lambda to execute our code and an IAM Role to allowing for the permissions to run the Lambda and write logs to CloudWatch. 
+The `AWS::Serverless::Function` resource type is a really concise way of creating an API Gateway instance with an endpoint,
+a Lambda to execute our code and an IAM Role to allowing for the permissions to run the Lambda and write logs to CloudWatch.
+The "HelloWorldFunction" resource executes the `lambdaHandler` function in `app.js`, on a HTTP GET request to `/hello`.
 
 Now that we understand what our SAM app is doing, lets run it!
 Run: `sam local start-api`, visit `http://localhost:3000/hello` and behold... hello world.
@@ -86,7 +87,7 @@ Lambda development where I had to manually upload my code changes to Lambda ever
 AWS SAM also gives us the tools to debug our Lambdas, instead of entirely relying on the ol' console.log.
 The AWS Toolkit Plugin can be installed for a number of different IDEs/ text editors to make debugging easier e.g. Visual Studio Code, IntelliJ, PyCharm.
 Since we are creating our application using Node, my example here will be demonstrating debugging using Visual Studio Code,
-however AWS' [documentation](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-using-debugging.html)
+however [AWS documentation](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-using-debugging.html)
 specifies in detail the process for other IDEs.
 
 To begin debugging our Lambdas in VSCode, first open the `sam-app` project in VSCode.
@@ -113,10 +114,10 @@ Open the dropdown next to the text Debug and select Add Configuration. This will
 }
 ```
 
-Note: On the `localRoot` property, "hello-world" should be changed to the name of the directory containing our Lambda application code.
+Note: The `localRoot` property value "hello-world" should be changed to the name of the directory containing our Lambda application code.
 
 Then run our Lambdas locally with the debug flag at port 5858: `sam local start-api -d 5858`.
-Once this is running, add a breakpoint to the line in our Lambda function, then hit the Play icon on the Attach to SAM CLI configuration we just added. 
+Once this is running, add a breakpoint to a line in our Lambda function, then hit the Play icon on the Attach to SAM CLI configuration we just added. 
 Finally invoke the function e.g. visit `http://localhost:3000/hello` and we can start debugging our Lambda within VSCode.
 
 This GIF on AWS documentation runs through the whole debugging process quite nicely.
@@ -130,16 +131,15 @@ Run `aws s3 mb s3://BUCKET_NAME` to create an S3 bucket.
 Note: BUCKET_NAME should be replaced with a more suitable name.
 
 Next run: `sam package --output-template-file packaged.yaml --s3-bucket BUCKET_NAME`.
-This long command will do a few things, it will upload our application code with its dependencies to our S3 bucket,
-knowing where it is located via the `CodeUri` property in our SAM template, then it will convert
-our SAM template to a CloudFormation template named `packaged.yaml` and updates the `CodeUri` property to point to our S3 bucket
+This long command will do a few things, it will upload our application code with its dependencies to our S3 bucket, then it will convert
+our SAM template to a CloudFormation template named `packaged.yaml`, updating the `CodeUri` property to point to our S3 bucket
 when our application code now resides. 
 
 Finally run `sam deploy --template-file packaged.yaml --stack-name sam-app --capabilities CAPABILITY_IAM`. This command is a wrapper around
 the `aws cloudformation deploy` command and simply deploys a stack, in this case called sam-app, from the `packaged.yaml` template file
 with the permissions to create IAM resources and schedules our specified resources to be created.
 You can visit the CloudFormation page in the AWS Console to view the progress of resource creation. Once our resources have been 
-successfully created, we can click Outputs, then click on the url titled `HelloWorldApi` to execute the deployed Lambda. 
+successfully created, we can click Outputs, then click the url titled `HelloWorldApi` to execute the deployed Lambda. 
 
 ## Interact with Other AWS Resources
 So we have deployed our application and greeted the world. Greeting the world is a little impersonal though,
@@ -165,16 +165,16 @@ Add the following to our `template.yml` within the Resources section:
           SSEEnabled: true
 ```
 
-This will create a simple DynamoDB table with a single primary key. Before we continue, deploy these changes to actually create the DynamoDB table.
-Our Lambda will need it to actually exist in order to interact with it.
+This will create a simple DynamoDB table with a single primary key, named `id` in this case.
+Before we continue, deploy these changes to actually create the DynamoDB table. Our Lambda will need it to actually exist in order to interact with it.
 
-Note: It is possible to run a dockerized version of DynamoDB locally and run a
-Lambda locally against that, however AWS SAMs tooling does not help with this and it is down to you to ensure the Lambda container and DynamoDB
-container can actually see each other. You also would need to create conditional logic in your Lambda
-to connect to your local dockerized DynamoDB container if you are running the Lambda locally, else in producrion, connect to the real DynamoDB.
+Note: It is possible to start a local Docker container version of DynamoDB and run a
+Lambda locally against it, however AWS SAMs tooling does not help with this and it is our responsibility to ensure the Lambda container and DynamoDB
+container can actually see each other. Conditional logic in the Lambda to connect to the local DynamoDB Docker container if you are running the
+Lambda locally, else in production, connect to the real DynamoDB would also be required.
 I did experiment with this but concluded that it was just easier to run a Lambda locally against real AWS resources.
 
-Now we need an additional Lambda to write names of people that need to be greeted to this shiny new database.
+Now we need an additional Lambda to write names of people that need to be greeted to this shiny new database table.
 Since this Lambda needs to be able to write to our database, it needs the have appropriate IAM Role. Luckily AWS SAM makes this really simple.
 
 Add the following code to our `template.yml` in the resources section:
@@ -199,11 +199,11 @@ Add the following code to our `template.yml` in the resources section:
               Method: post
 ```
 
-This will create a new API Gateway endpoint `/add-name` that will accept HTTP POST requests and runs the function `addName` in app.js.
-Notice the Policy section, AWS SAM has a bunch of pre-canned policies for access to common services, like the one we defined on NamesTable
-for DynamoDB CRUD operations. You can view the other Policy Templates [here](https://github.com/awslabs/serverless-application-model/blob/master/docs/policy_templates.rst).
+This will create a new API Gateway endpoint `/add-name` that will accept HTTP POST requests and runs the function `addName` in `app.js`.
+Notice the predefined `DynamoDBCrudPolicy` in the Policy section; AWS SAM has a bunch of pre-canned policies for access to common services,
+like the one we defined on NamesTable for DynamoDB CRUD operations. You can view the other Policy Templates [here](https://github.com/awslabs/serverless-application-model/blob/master/docs/policy_templates.rst).
 
-Time to actually create our `addNames` function. First install the AWS SDK: `npm install aws-sdk`, then we can write the following code:.
+Time to actually create our `addNames` function. First install the AWS SDK: `npm install aws-sdk`, then we can write the following code:
 
 ```
 const AWS = require('aws-sdk');
@@ -264,7 +264,7 @@ Add the following to our `template.yml`:
               Method: get
 ```
 
-Then lets write the function itself.
+Then lets write the function itself:
 
 ```
 exports.greetNames = async (event, context) => {
@@ -291,7 +291,7 @@ exports.greetNames = async (event, context) => {
 }
 ```
 
-This function simply fetches all items from out Names table, maps the name property and then appends the names to a greeting.
+This function simply fetches all items from our Names table, maps the name property and then returns a greeting with all the names.
 
 Let's also add the URLs for our new endpoints in the Outputs section so we can easily access them when we deploy:
 
@@ -307,7 +307,7 @@ Let's also add the URLs for our new endpoints in the Outputs section so we can e
   ...
 ```
 
-Now all is left to do is to deploy, get the URLs from the Outputs section in CloudFormation and try out our Lambdas in the wild.
+Now all is left to do is to deploy, get the URLs from the Outputs section in the AWS Console CloudFormation page and try out our Lambdas in the wild.
 
 So here we have demonstrated that we can interact with AWS resources whilst running Lambda locally, purely using IAM Roles.
 This approach is recommended by AWS themselves and eliminates the risk of misplacing AWS credentials.
