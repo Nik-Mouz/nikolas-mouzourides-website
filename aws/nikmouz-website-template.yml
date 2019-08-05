@@ -52,7 +52,7 @@ Resources:
           ForwardedValues:
             QueryString: 'true'
           TargetOriginId: only-origin
-          ViewerProtocolPolicy: allow-all
+          ViewerProtocolPolicy: redirect-to-https
         DefaultRootObject: index.html
         Logging:
           Bucket: !GetAtt 'WebsiteLogsBucket.DomainName'
@@ -66,6 +66,7 @@ Resources:
             DomainName: !Join ['', [!Ref 'WebsiteS3Bucket', '.s3-website-eu-west-1.amazonaws.com']]
             Id: only-origin
         PriceClass: PriceClass_100
+        HttpVersion: http2
         ViewerCertificate:
           AcmCertificateArn: !Ref 'Certificate'
           MinimumProtocolVersion: TLSv1.1_2016
