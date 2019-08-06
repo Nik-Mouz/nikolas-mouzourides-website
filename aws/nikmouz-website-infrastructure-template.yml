@@ -13,6 +13,9 @@ Parameters:
     Type: String
     Description: The Acm Certificate Arn value
     AllowedPattern: "^arn:aws:acm:[a-z0-9-]+:[0-9]+:certificate/[0-9a-f-]+$"
+  LambdaEdgeArn:
+    Type: String
+    Description: The arn for lambda edge function
 
 Resources:
   WebsiteS3Bucket:
@@ -53,6 +56,9 @@ Resources:
             QueryString: 'true'
           TargetOriginId: only-origin
           ViewerProtocolPolicy: redirect-to-https
+          LambdaFunctionAssociations:
+            - EventType: viewer-response
+              LambdaFunctionARN: !Ref 'LambdaEdgeArn'
         DefaultRootObject: index.html
         Logging:
           Bucket: !GetAtt 'WebsiteLogsBucket.DomainName'

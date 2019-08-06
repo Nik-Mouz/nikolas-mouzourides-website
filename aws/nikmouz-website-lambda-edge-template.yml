@@ -1,0 +1,81 @@
+# This is a separate stack due to lambda@edge functions only being supported in us-east-1 at this time.
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'Infrastructure template for lambda edge function to add security http headers'
+
+Resources:
+  AttachHeadersLambdaRole:
+    Type: AWS::IAM::Role
+    Properties:
+      Path: "/"
+      ManagedPolicyArns:
+        - "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          -
+            Sid: AllowLambdaServiceToAssumeRole
+            Effect: Allow
+            Action:
+              - sts:AssumeRole
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+                - edgelambda.amazonaws.com
+
+  AttachHeadersLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      Description: Attach HTTP Headers on viewer response
+      Code:
+        ZipFile: |
+          exports.handler = (event, context, callback) => {
+              const response = event.Records[0].cf.response;
+              const headers = response.headers;
+
+              headers['strict-transport-security'] = [{
+                key:   'Strict-Transport-Security',
+                value: "max-age=31536000; includeSubdomains"
+              }];
+
+              headers['x-content-type-options'] = [{
+                key:   'X-Content-Type-Options',
+                value: "nosniff"
+              }];
+
+              headers['x-content-type-options'] = [{
+                key: 'X-Content-Type-Options',
+                value: "nosniff"
+              }];
+
+              headers['feature-policy'] = [{
+                key:   'Feature-Policy',
+                value: "vibrate 'none'; geolocation 'self'; midi 'none'; notifications 'none'; payment 'none'; vr 'none'; fullscreen 'self'; speaker 'self'; gyroscope 'none'; magnetometer 'none'; camera 'none'; microphone 'none'; sync-xhr 'self'; usb 'none'; picture-in-picture 'none'; autoplay 'none';"
+              }];
+
+              headers['x-frame-options'] = [{
+                key:   'X-Frame-Options',
+                value: "deny"
+              }];
+
+              headers['referrer-policy'] = [{
+                key:   'Referrer-Policy',
+                value: "no-referrer-when-downgrade"
+              }];
+
+              callback(null, response);
+          };
+      Handler: index.handler
+      MemorySize: 128
+      Role: !GetAtt 'AttachHeadersLambdaRole.Arn'
+      Runtime: nodejs8.10
+
+  AttachHeadersLambdaVersion:
+    Type: AWS::Lambda::Version
+    Properties:
+      FunctionName: !Ref AttachHeadersLambda
+      Description: Function to add HTTP Headers
+
+Outputs:
+  AttachHeadersLambdaVersion:
+    Value: !Ref 'AttachHeadersLambdaVersion'
+    Description: Attach Headers lambda version arn
