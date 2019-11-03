@@ -4,11 +4,11 @@ phases:
     runtime-versions:
       nodejs: 10
     commands:
-      - yarn install
+      - npm install
   build:
     commands:
-      - yarn build
-      - yarn test:ci
+      - npm run build
+      - npm run test:ci
       - aws s3 sync --delete --no-progress public/ s3://nikmouz.dev
 artifacts:
   files:
