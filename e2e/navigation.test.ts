@@ -13,6 +13,7 @@ test("The navigation bar should display mobile components when on mobile viewpor
 
   await t
     .resizeWindowToFitDevice('iPhone 6', { portraitOrientation: true })
+    .wait(500)
     .expect(mobileMenu.visible).ok()
     .click(mobileMenu)
     .expect(mobileDrawer.visible).ok()
