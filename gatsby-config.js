@@ -75,6 +75,14 @@ module.exports = {
           windows: false
         }
       }
+    },
+    {
+      resolve: `gatsby-plugin-s3`,
+      options: {
+        bucketName: 'nikmouz.dev',
+        protocol: "https",
+        hostname: "nikmouz.dev",
+      },
     }
   ]
 };

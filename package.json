@@ -19,6 +19,7 @@
     "gatsby-plugin-manifest": "^2.0.22",
     "gatsby-plugin-material-ui": "^1.2.4",
     "gatsby-plugin-react-helmet": "^3.0.8",
+    "gatsby-plugin-s3": "^0.3.2",
     "gatsby-plugin-sass": "^2.0.10",
     "gatsby-plugin-sharp": "^2.0.25",
     "gatsby-plugin-typescript": "^2.0.10",
@@ -37,6 +38,7 @@
     "build": "gatsby build",
     "start": "gatsby develop",
     "serve": "gatsby serve -p 8000",
+    "deploy": "gatsby-plugin-s3 deploy --yes",
     "test": "testcafe chrome:headless e2e/*.test.ts -S -s reports/screenshots --video reports/videos",
     "test:ci": "yarn run start-test 'yarn serve' 'http://localhost:8000' 'yarn test'"
   },

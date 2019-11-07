@@ -9,7 +9,7 @@ phases:
     commands:
       - npm run build
       - npm run test:ci
-      - aws s3 sync --delete --no-progress public/ s3://nikmouz.dev
+      - npm run deploy
 artifacts:
   files:
     - reports/**/*
