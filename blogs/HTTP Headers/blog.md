@@ -1,6 +1,6 @@
 ---
 path: "/blog/security-http-headers"
-date: "2019-10-03"
+date: "2019-11-03"
 title: "Security HTTP Headers - Is your website secure?"
 description: "Is your website as secure as it could be? Using securityheaders.com, you can scan your website's headers to find out!"
 hero: "./blog-hero.jpg"
@@ -113,7 +113,7 @@ I decided to not set this header. I did experiment with it by using the Content 
 but I found that the [framework my website uses](https://nikmouz.dev/blog/creating-nikmouz-dot-dev/), Gatsby, relies on
 inline JS and CSS in the name of performance. This is problematic when setting this header.
 There is an issue raised on Github [here](https://github.com/gatsbyjs/gatsby/issues/10890). 
-I did also notice there was a plugin available for Gatsby which claims to generated hashes for inline scripts and styles
+I did also notice there was a plugin available for Gatsby which claims to generate hashes for inline scripts and styles
 which I may look at in the future.
 
 ## Conclusion
@@ -124,4 +124,4 @@ Lets do a scan site after setting these headers.
 Much better :)
 
 Try out your own website and see how you score! 
-Tweet at me if you end up setting any of these headers or if you think a value I set a header to could be improved.
+Tweet at me if you end up setting any of these headers or if you think a header value could be improved.
