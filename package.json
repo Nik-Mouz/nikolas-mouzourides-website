@@ -40,7 +40,7 @@
     "serve": "gatsby serve -p 8000",
     "deploy": "gatsby-plugin-s3 deploy --yes",
     "test": "testcafe chrome:headless e2e/*.test.ts -S -s reports/screenshots --video reports/videos",
-    "test:ci": "yarn run start-test 'yarn serve' 'http://localhost:8000' 'yarn test'"
+    "test:ci": "start-server-and-test serve http://localhost:8000 test"
   },
   "repository": {
     "type": "git",
