@@ -165,8 +165,7 @@ you must do this for each listed domain.
 * Select the Continue button.
 
 From here all you have to do is wait until Amazon validates that you actually own your domain by looking for those CNAME records. This should not take too long.
-Go make yourself a coffee. Once your domain has been validated, you will have successfully generated an SSL Certificate, sitting there ready to use!
-You can also remove those CNAME records in Route 53 once Amazon has finished the validation process. Time to apply your SSL certificate.
+Go make yourself a coffee. Once your domain has been validated, you will have successfully generated an SSL Certificate, sitting there ready to use! Time to apply your SSL certificate.
 Unfortunately S3 does not support HTTPS natively, in order to use HTTPS we must introduce another AWS service called CloudFront. 
 
 ## CloudFront
