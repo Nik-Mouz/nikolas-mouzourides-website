@@ -59,9 +59,9 @@ Material-UI has some great components that work very nicely with React and look 
 They seems to have embraced the whole CSS-in-JS movement, (all their code examples use it), I just deleted it all and implemented it in SCSS,
 as God intended.
 
-I chose Typescript just due to personal preference, I don't think I gained a huge amount of benefit having types on this particular project,
-one could argue that it probably wasn't necessary but due learning Java as my first language and being an advocate of types,
-I find writing Typescript much more enjoying, even if it's just pretending to be safer sometimes.
+I chose Typescript just due to personal preference. I don't think I gained a huge amount of benefit having types on this particular project,
+one could argue that it probably wasn't necessary but due to learning Java as my first language and being an advocate of types,
+I find writing Typescript much more enjoyable, even if it's just pretending to be safer sometimes.
 
 For testing I decided to try out [Cypress](https://www.cypress.io/), I've heard good things about it from co-workers. I found it had a nice DSL, being designed 
 for method chaining gave it a clean appearance which I found easy to read. Cypress' test runner is extremely nice,
