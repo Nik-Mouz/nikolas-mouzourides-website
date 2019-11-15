@@ -82,6 +82,7 @@ module.exports = {
         bucketName: 'nikmouz.dev',
         protocol: "https",
         hostname: "nikmouz.dev",
+        acl: null
       },
     }
   ]
