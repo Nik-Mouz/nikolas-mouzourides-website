@@ -8,15 +8,12 @@ test("The navigation bar should display desktop components when on desktop viewp
 });
 
 test("The navigation bar should display mobile components when on mobile viewport", async t => {
-  const mobileMenu = Selector("[data-acctest='mobile-menu']");
-  const mobileDrawer = Selector("[data-acctest='mobile-drawer']");
-
   await t
-    .resizeWindowToFitDevice('iPhone 6', { portraitOrientation: true })
+    .resizeWindow(375, 667)
     .wait(500)
-    .expect(mobileMenu.visible).ok()
-    .click(mobileMenu)
-    .expect(mobileDrawer.visible).ok()
+    .expect(Selector("[data-acctest='mobile-menu']").visible).ok()
+    .click(Selector("[data-acctest='mobile-menu']"))
+    .expect(Selector("[data-acctest='mobile-drawer']").visible).ok()
     .click(Selector("[data-acctest='drawer-close']"))
-    .expect(mobileDrawer.exists).notOk();
+    .expect(Selector("[data-acctest='mobile-drawer']").exists).notOk();
 });
