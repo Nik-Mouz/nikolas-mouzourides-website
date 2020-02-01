@@ -43,6 +43,12 @@ Resources:
     Properties:
       BucketName: !Join ['', [!Ref 'HostedZone', '-logs']]
       AccessControl: BucketOwnerFullControl
+      LifecycleConfiguration:
+        Rules:
+          - Id: LogsCleanUp
+            Prefix: !Ref 'HostedZone'
+            Status: Enabled
+            ExpirationInDays: 90
 
   WebsiteCDN:
     Type: AWS::CloudFront::Distribution
