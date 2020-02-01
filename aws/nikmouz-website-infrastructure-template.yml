@@ -105,7 +105,7 @@ Resources:
     Properties:
       FunctionName: redirect-www-to-naked
       Description: Redirects www subdomain to naked
-      Runtime: nodejs8.10
+      Runtime: nodejs12.x
       Role: !GetAtt 'LambdaRole.Arn'
       Handler: index.handler
       Code:
