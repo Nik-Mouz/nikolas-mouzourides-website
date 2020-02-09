@@ -50,6 +50,19 @@ Resources:
             Status: Enabled
             ExpirationInDays: 90
 
+  WebsiteDrawingsBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: nikmouz-drawings
+      AccessControl: PublicRead
+      CorsConfiguration:
+        CorsRules:
+          - AllowedOrigins:
+            - 'https://*.nikmouz.dev'
+            - 'http://localhost:8000'
+            AllowedMethods:
+              - GET
+
   WebsiteCDN:
     Type: AWS::CloudFront::Distribution
     Properties:

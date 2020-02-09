@@ -1,12 +1,29 @@
 import React from "react";
 import Layout from "../components/layout/layout";
 import Seo from "../components/seo/seo";
-import BlogCard from "../components/card/card";
 import { graphql } from "gatsby";
-import { BlogProps } from "../components/blog-props.state";
+import { BlogProps, Edge } from "../components/blog-props.state";
+import { useArtFetch } from "./art";
+import ContentCard, { CardProps, ContentType, Size } from "../components/content-card/content-card";
 
 const IndexPage = (props: BlogProps) => {
-  const posts = props.data.allMarkdownRemark.edges;
+  const drawingList: CardProps[] = useArtFetch()
+    .map(art => ({...art, size: Size.SMALL}));
+
+  const posts: CardProps[] = [...props.data.allMarkdownRemark.edges.map((edge: Edge) =>
+    ({
+      type: ContentType.BLOG,
+      size: Size.SMALL,
+      title: edge.node.frontmatter.title,
+      date: new Date(edge.node.frontmatter.date),
+      description: edge.node.frontmatter.description,
+      url: edge.node.frontmatter.path,
+      image: edge.node.frontmatter.hero.childImageSharp.fluid,
+    })),
+    ...drawingList
+  ].sort((a: CardProps, b: CardProps) => +b.date - +a.date)
+    .slice(0, 3);
+
   const hero = props.data.placeholderImage.childImageSharp.fluid;
   return (
     <>
@@ -34,12 +51,11 @@ const IndexPage = (props: BlogProps) => {
         </p>
         <h1>Recent Activity</h1>
         <div className="d-flex flex-row flex-wrap">
-          {posts.map((post, idx) =>
-            <BlogCard key={"recent-blogs-" + idx}
-                      title={post.node.frontmatter.title}
-                      description={post.node.frontmatter.description}
-                      url={post.node.frontmatter.path}
-                      image={post.node.frontmatter.hero.childImageSharp.fluid}/>
+          {posts.map((post) =>
+            <ContentCard
+              key={post.title}
+              {...post}
+            />
           )}
         </div>
       </Layout>

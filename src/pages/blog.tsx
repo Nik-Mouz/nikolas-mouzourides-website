@@ -1,9 +1,9 @@
 import React from "react";
 import Layout from "../components/layout/layout";
 import Seo from "../components/seo/seo";
-import BlogCard from "../components/card/card";
 import { graphql } from "gatsby";
 import { BlogProps } from "../components/blog-props.state";
+import ContentCard, { ContentType, Size } from "../components/content-card/content-card";
 
 const Blog = (props: BlogProps) => {
   const posts = props.data.allMarkdownRemark.edges;
@@ -14,11 +14,14 @@ const Blog = (props: BlogProps) => {
       <h1 className="pb-2">Blog</h1>
       <div className="d-flex flex-row flex-wrap">
         {posts.map((post, idx) =>
-          <BlogCard key={"blog-" + idx}
-                    title={post.node.frontmatter.title}
-                    url={post.node.frontmatter.path}
-                    description={post.node.frontmatter.description}
-                    image={post.node.frontmatter.hero.childImageSharp.fluid}
+          <ContentCard key={"blog-" + idx}
+                       type={ContentType.BLOG}
+                       title={post.node.frontmatter.title}
+                       url={post.node.frontmatter.path}
+                       date={new Date(post.node.frontmatter.date)}
+                       description={post.node.frontmatter.description}
+                       image={post.node.frontmatter.hero.childImageSharp.fluid}
+                       size={Size.SMALL}
           />
         )}
       </div>
