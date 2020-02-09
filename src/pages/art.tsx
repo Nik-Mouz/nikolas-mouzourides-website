@@ -12,7 +12,7 @@ const Art = (props: BlogProps) => {
   return (
     <Layout heroImage={hero}>
       <Seo title="Blog" description="Nik Mouzourides sketches"/>
-      <h1 className="pb-2">Drawings</h1>
+      <h1 className="pb-2">Art</h1>
       <div className="d-flex flex-row flex-wrap justify-content-center">
         {drawingList && drawingList.map((drawing: CardProps) =>
           <ContentCard {...drawing} key={drawing.title}/> )}
