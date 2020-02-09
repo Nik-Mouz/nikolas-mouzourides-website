@@ -3,14 +3,10 @@ import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "../../images/menu-icon.svg";
 import { Link } from "gatsby";
-import List from "@material-ui/core/es/List/List";
-import ListItem from "@material-ui/core/es/ListItem/ListItem";
-import ListItemText from "@material-ui/core/es/ListItemText/ListItemText";
-import Divider from "@material-ui/core/es/Divider/Divider";
-import SwipeableDrawer from "@material-ui/core/es/SwipeableDrawer/SwipeableDrawer";
 import SocialMediaIcons from "../social-media-icons/social-media-icons";
 
 import "./header.scss";
+import { Divider, List, ListItem, ListItemText, SwipeableDrawer } from "@material-ui/core";
 
 interface HeaderProps {
   title: string;
@@ -25,7 +21,8 @@ const Header = (props: HeaderProps) => {
           <Link to="/">{props.title} </Link>
         </Typography>
         <Typography className="nav-heading pr-5 mr-3 no-display-mobile" variant="h5" color="inherit">
-          <Link to="/blog">Blog</Link>
+          <Link className="mr-4" to="/blog">Blog</Link>
+          <Link to="/art">Art</Link>
         </Typography>
       </div>
       <div className="d-flex justify-content-around">
@@ -68,6 +65,11 @@ const Header = (props: HeaderProps) => {
               <Link to="/blog">
                 <ListItem button key="Blog">
                   <ListItemText primary="Blog"/>
+                </ListItem>
+              </Link>
+              <Link to="/art">
+                <ListItem button key="Art">
+                  <ListItemText primary="Art"/>
                 </ListItem>
               </Link>
               <Divider/>

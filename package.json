@@ -4,7 +4,7 @@
   "version": "2.0.0",
   "author": "Nik Mouzourides <nikolas.mouzourides@gmail.com>",
   "dependencies": {
-    "@material-ui/core": "^3.9.2",
+    "@material-ui/core": "^4.9.1",
     "@types/react-helmet": "^5.0.8",
     "bootstrap": "^4.3.1",
     "gatsby": "^2.19.11",
