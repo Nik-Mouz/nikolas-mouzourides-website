@@ -42,7 +42,7 @@ Enter http://10.10.10.165 into a web browser.
 
 It appears to be a pretty standard portfolio website for a guy named David. There is a contact form which performs a GET request to empty.html and responds with: "No mail sent. Not yet finished. Please come back soon!". Other than that, the site seems pretty uninteresting.
 
-Let's brute force dircetories on the web server to see if there is any other site being hosted.
+Let's brute force directories on the web server to see if there is any other site being hosted.
 Fire up Dirbuster, point it at http://10.10.10.165, increase thread count, select the wordlist at `/usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt`, change the file extension to "html,txt". Then hit start and let Dirbuster do its thing.
 
 Again the results of this aren't hugely interesting, it seems that this portfolio website is the only site being hosted.
@@ -108,19 +108,21 @@ It seems to identify the hash as MD5 (Unix).
 
 There is no sign of the .htaccess file at the moment though.
 
-Interestlingly the config also stats that the web server is serving home directories and password protecting a directory called `public_www`.
+Interestingly the config also stats that the web server is serving home directories and password protecting a directory called `public_www`.
 
-It is also good practise to execute (LinEnum.sh)[https://github.com/rebootuser/LinEnum], a tool used to help identify ways in which we can privilage escalate, however I think we have everything we need for now.
+It is also good practise to execute [LinEnum.sh](https://github.com/rebootuser/LinEnum), a tool used to help identify ways in which we can privilage escalate, however I think we have everything we need for now.
 
 #### User Exploitation
-Let's try and crack the hash we found in `.htpasswd`. We can use a command line tool called `hashcat` to perform a brute force attack. Kali Linux comes with a few wordlists, the one we will be using for this tutorial is called `rockyou.txt`. Note: you may need to extract this wordlist if you haven't use it before, it can be found: `/usr/share/wordlists`.
+Let's try and crack the hash we found in `.htpasswd`. We can use a command line tool called `hashcat` to perform a brute force attack. Kali Linux comes with a few wordlists, the one we will be using for this tutorial is called `rockyou.txt`. Note: you may need to extract this wordlist if you haven't use it before, it can be found at: `/usr/share/wordlists`.
 
 We already identified that the hash is an MD5 (Unix) hash and so we can configure hashcat to attempt to crack this hash with the following command:
-`hashcat -m 500 -a 3 '$1$e7NfNpNi$A6nCwOTqrNR2oDuIKirRZ/' /usr/share/wordlists/rockyou.txt --show`
+```
+hashcat -m 500 -a 3 '$1$e7NfNpNi$A6nCwOTqrNR2oDuIKirRZ/' /usr/share/wordlists/rockyou.txt --show
+```
 The `-m 500` sets the hash mode to MD5 (Unix) and the `-a 3` sets the attack mode to brute force.
 Note: If you are within a VM, add a `--force` on the end of this command.
 
-Hashcat should quickly crack this password and output the followingL
+Hashcat should quickly crack this password and output the following:
 ```
 $1$e7NfNpNi$A6nCwOTqrNR2oDuIKirRZ/:Nowonly4me
 ```
@@ -130,8 +132,8 @@ We can try and use this password to switch the user to David with a `su david` o
 Next we can inspect Nostromo serving home directories. Let's go to http://10.10.10.165/~david in our browser. We get a colourful webpage telling us the page is private, we'll see about that...
 
 If you remember the contents of the Nostromo config file, `/var/nostromo/conf/nhttpd.conf`, the directory `public_www` is password protected.
-Previously we also determiend that we could change directory into David's home directory since the executable bit was set for all users. Let's try and change into this `public_www` directorty with a `cd /home/david/public_www`. 
-After running this, we can see that it was successfuly and we can even perform an `ls`. This makes sense since we are the same user as the Nostromo web server, `www-data`, so we access to all files it can serve. Interestingly the `ls` in this directory informed us of a zipped file called `backup-ssh-identify-files.tgz`. Let's download them. We can do so by visiting http://10.10.10.165/~david/public_www/backup-ssh-indentify-files.tgz in our browser and then providing David and the password we cracked: Nowonly4me as the basic authentication username and password. After downloading this zipped file, we can unzip it to discover our loot, some ssh keys.
+Previously we also determined that we could change directory into David's home directory since the executable bit was set for all users. Let's try and change into this `public_www` directory with a `cd /home/david/public_www`. 
+After running this, we can see that it was successful and we can even perform an `ls`. This makes sense since we are the same user as the Nostromo web server, `www-data`, so we access to all files it can serve. Interestingly the `ls` in this directory informed us of a zipped file called `backup-ssh-identify-files.tgz`. Let's download them. We can do so by visiting http://10.10.10.165/~david/public_www/backup-ssh-identify-files.tgz in our browser and then providing "David" and the password we cracked: "Nowonly4me" as the basic authentication username and password. After downloading this zipped file, we can unzip it to discover our loot, some ssh keys.
 
 If we look at the private ssh key: `cat backup-ssh-identify-files/home/david/.ssh/id_rsa`, we can note that the key is encryped and so was created with a passphrase. This means we will need to brute force crack the passphrase. We can do so with a little help of a command line tool called `john`.
 
@@ -147,7 +149,7 @@ We are in. We can collect the user flag at `~/user.txt`.
 Now we are able to access the server as David, let's have a look around. Performing an `ls` in David's home directory tells us there is a directory called bin, inside that there is script called `server-stats.sh`. Looking at the source code for it, amongst other things it seems to use the command `/usr/bin/sudo /usr/bin/journalctl -n5 -unostromo.service | /usr/bin/cat` to provide the user with some information about the Nostromo process. If we run this script: `./server-stats.sh` we can see that it does indeed do this... however it did not ask David for a password... It seems as though it has been configured to allow David to run the command `sudo /usr/bin/journalctl -n5 -unostromo.service` without providing a password for sudo. This is never a good idea and we can abuse this to get root access to the server.
 
 #### Root Exploitation
-If we visit the [GTFO.bins](https://gtfobins.github.io/) page for [journalctl](https://gtfobins.github.io/gtfobins/journalctl/), we can see that it is possible to spawn a shell using the command `!/bin/sh`, due to the fact that it invokes the default pager which is likely to be (less)[https://gtfobins.github.io/gtfobins/less/].
+If we visit the [GTFO.bins](https://gtfobins.github.io/) page for [journalctl](https://gtfobins.github.io/gtfobins/journalctl/), we can see that it is possible to spawn a shell using the command `!/bin/sh`, due to the fact that it invokes the default pager which is likely to be [less](https://gtfobins.github.io/gtfobins/less/).
 
 Now If we run the command `sudo /usr/bin/journalctl -n5 -unostromo.service`, we should be greeted with the output of the command within a program that looks like less, and if we run the command `!/bin/sh`, it should spawn us a shell.
 
@@ -156,9 +158,9 @@ Performing a `whoami` should tell us we are now root. We can collect the flag at
 We have now owned the box :) 
 
 ## Review
-This is the second box I have successfully rooted on [Hack The Box](https://www.hackthebox.eu/) and I really enjoyed it! It is a relativly easy box and so a great box if you are just getting started and yet there is much to be learnt from it.
+This is the second box I have successfully rooted on [Hack The Box](https://www.hackthebox.eu/) and I really enjoyed it! It is a relatively easy box, a great box if you are just getting started and yet it offers plenty to learn.
 
-It's great as an introduction to brute force cracking hashes and as a lesson to all to ensure that software is kept up-to-date, don't configure no password root access and also probably not a great idea to serve home directories from a web server.
+It's great as an introduction to brute force cracking hashes and as a lesson to all to ensure that software is kept up-to-date, no password sudo access is not configured and not to serve home directories from a web server.
 My only critique is that privilage escalating to root was a little too easy.
 
 I plan to attempt to root more machines on [Hack The Box](https://www.hackthebox.eu/) so expect more write-up blogs as machines get retired.
