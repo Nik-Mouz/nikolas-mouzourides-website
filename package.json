@@ -11,7 +11,8 @@
     "gatsby-image": "^2.0.31",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-helmet": "^5.2.0"
+    "react-helmet": "^5.2.0",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "@ffmpeg-installer/ffmpeg": "^1.0.18",
@@ -41,10 +42,13 @@
     "clean": "gatsby clean",
     "deploy": "gatsby-plugin-s3 deploy --yes",
     "test": "testcafe chrome:headless e2e/*.test.ts -S -s reports/screenshots --video reports/videos",
-    "test:ci": "start-server-and-test serve http://localhost:8000 test"
+    "test:ci": "start-server-and-test serve http://localhost:8000 test",
+    "snyk-protect": "snyk protect",
+    "prepare": "yarn run snyk-protect"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/mouzourides/nikolas-mouzourides-website"
-  }
+  },
+  "snyk": true
 }
