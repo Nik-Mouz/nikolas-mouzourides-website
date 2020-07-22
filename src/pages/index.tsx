@@ -31,24 +31,11 @@ const IndexPage = (props: BlogProps) => {
         <Seo title="Home" description="Nikolas Mouzourides home page" keywords={[`gatsby`, `application`, `react`]}/>
         <h1>Hello world</h1>
         <p>
-          My name is Nikolas Mouzourides and I am a full stack developer at&nbsp;
-          <a href="https://www.blackpepper.co.uk" target="_blank">Black Pepper Software.</a>
+          I'm Nikolas Mouzourides; a software developer, security enthusiast, hacker, gamer, and sketcher.
         </p>
-        <p>
-          My original goal for this website was simple, to create something, anything, and put it on the web.
-          On 4th March 2019, nikmouz.dev was deployed.
-          It was a basic website only containing the text "Hello world by Nikolas Mouzourides",
-          but it was a start; I had a corner of the web that was my own.
-        </p>
-        <p>
-          From there I iterated and developed the site, improving the UX and adding a blog.
-          The site is always changing but for now, I want it to be a place to tie together my interests,
-          a portal one can view to catch up with what I've been up to.
-          I plan to accomplish this by releasing monthly-ish blog posts.
-        </p>
-        <p>
-          I hope you enjoy your stay :)
-        </p>
+        <h5 className="pb-5">
+          <i>Welcome to my corner of the web.</i>
+        </h5>
         <h1>Recent Activity</h1>
         <div className="d-flex flex-row flex-wrap">
           {posts.map((post) =>
