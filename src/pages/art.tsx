@@ -37,7 +37,7 @@ export function useArtFetch(): CardProps[] {
   const [drawingList, setDrawingList]: Array<any> = useState([]);
 
   useEffect(() => {
-    let drawingBaseUrl = "https://nikmouz-drawings.s3-eu-west-1.amazonaws.com/";
+    const drawingBaseUrl = "https://nikmouz-drawings.s3-eu-west-1.amazonaws.com/";
     fetch(drawingBaseUrl)
       .then(r => r.text())
       .then(r => {
@@ -67,7 +67,7 @@ export function useArtFetch(): CardProps[] {
               }
             };
           }
-        );
+        ).sort((a, b) => +a.date + +b.date);
 
         setDrawingList(drawings);
       });
