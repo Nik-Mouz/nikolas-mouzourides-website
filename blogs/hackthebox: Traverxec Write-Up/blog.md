@@ -83,9 +83,9 @@ A path traversal attack is a type of attack commonly performed against web serve
 
 So what is this `%0d`? It's a HEX representation of a carriage return in ASCII. We need this due to the fact that the Nostromo source code in version 1.9.6 tries to defend against this attack via an if statement that specifically checks for `/../` in the path of incoming HTTP messages and returns a HTTP 400 if it matches. We dodge matching that if statement by placing a carriage return between it, `/.%0d./`, and then finally Nostromo made the mistake of cutting out carraige return characters meaning that after we pass the if statement and the carriage returns get cut out, the request path then looks like this:  `/../../../../bin/sh`. Perfect.
 
-## Privilage Escalation
+## Privilege Escalation
 #### User Enumeration
-Running a `whoami`, will tell us that we are currently the user `www-data`, looks like we will need to privilage escalate. 
+Running a `whoami`, will tell us that we are currently the user `www-data`, looks like we will need to privilege escalate. 
 
 Let's have a look around.
 
@@ -94,7 +94,8 @@ A quick `ls -l /home` tells us David has a home directory and also its permissio
 
 Next let's look at the source code to see if we can find any server-side code we can take advantage of.
 We can find the source code for David's site at `cd /var/nostromo/`.
-We can take a closer look at `empty.html`, the page that the contact form was POST-ing to and see that is always returns the text: "No mail sent. Not yet finished. Please come back soon!" regardless of what we send i nthe contact form, looks like that contact form is still being worked on, we can cross that out in our notes. Aside from that, nothing too interesting to be found in the source code. 
+We can take a closer look at `empty.html`, the page that the contact form was POST-ing to and see that is always returns the text: "No mail sent. Not yet finished. Please come back soon!" regardless of what we send in
+ the contact form, looks like that contact form is still being worked on, we can cross that out in our notes. Aside from that, nothing too interesting to be found in the source code. 
 
 Next let's take a look at the configuration for Nostromo. We can find the `nhttpd.conf` in `/var/nostromo/conf/`. It seems to look like a standard web server config file until we reach the basic authentication header.
 This specifies an access file called `.htaccess` which is secured by the password file: `/var/nostromo/conf/.htpasswd`. Sure enough, this password file exists and within it we can find the following:
@@ -108,9 +109,9 @@ It seems to identify the hash as MD5 (Unix).
 
 There is no sign of the .htaccess file at the moment though.
 
-Interestingly the config also stats that the web server is serving home directories and password protecting a directory called `public_www`.
+Interestingly the config also states that the web server is serving home directories and password protecting a directory called `public_www`.
 
-It is also good practise to execute [LinEnum.sh](https://github.com/rebootuser/LinEnum), a tool used to help identify ways in which we can privilage escalate, however I think we have everything we need for now.
+It is also good practise to execute [LinEnum.sh](https://github.com/rebootuser/LinEnum), a tool used to help identify ways in which we can privilege escalate, however I think we have everything we need for now.
 
 #### User Exploitation
 Let's try and crack the hash we found in `.htpasswd`. We can use a command line tool called `hashcat` to perform a brute force attack. Kali Linux comes with a few wordlists, the one we will be using for this tutorial is called `rockyou.txt`. Note: you may need to extract this wordlist if you haven't use it before, it can be found at: `/usr/share/wordlists`.
@@ -161,6 +162,6 @@ We have now owned the box :)
 This is the second box I have successfully rooted on [Hack The Box](https://www.hackthebox.eu/) and I really enjoyed it! It is a relatively easy box, a great box if you are just getting started and yet it offers plenty to learn.
 
 It's great as an introduction to brute force cracking hashes and as a lesson to all to ensure that software is kept up-to-date, no password sudo access is not configured and not to serve home directories from a web server.
-My only critique is that privilage escalating to root was a little too easy.
+My only critique is that privilege escalating to root was a little too easy.
 
 I plan to attempt to root more machines on [Hack The Box](https://www.hackthebox.eu/) so expect more write-up blogs as machines get retired.
