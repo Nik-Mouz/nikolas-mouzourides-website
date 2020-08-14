@@ -141,7 +141,7 @@ All that is left to do now is to push each keycap into the switch in the appropr
  
  ## Conclusion 
 I use keyboards a lot. My job as a software developer means I'm pretty much hammering that semi-colon key all day long. Even when I'm not working, I spent a lot of time
- gaming and browsing the web, now more than even due to COVID-19. It's fair to say this keyboard will see a lot of use.
+ gaming and browsing the web, now more than ever due to COVID-19. It's fair to say this keyboard will see a lot of use.
 Building your own keyboard is not for everyone though. It is an expensive hobby, the building process is time consuming and the parts do take an extremely long time to ship.
 That being said, I'm really pleased with the result of this project. The keyboard is so quiet and smooth, I love typing on it.
 The cyan and white keycaps combined with the blue underglow looks clean.
