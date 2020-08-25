@@ -59,10 +59,9 @@ const ContentCard = (props: CardProps) => {
                     setClosed={() => setModalOpen(false)}
                     title={props.title}
                     date={props.date}>
-        <a href={props.url} className="pb-3">
-          <img className="img-fluid pb-2" src={props.url} alt={props.title} />
+        <a href={props.url} target="_blank" className="pb-3">
+          <img className="img-fluid pb-3" src={props.url} alt={props.title} />
         </a>
-        <SupportCard title={"Like what you see?"}/>
       </ContentModal>
     </>
   );
