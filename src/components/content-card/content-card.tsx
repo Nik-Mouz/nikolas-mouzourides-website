@@ -4,6 +4,7 @@ import Img, { FluidObject } from "gatsby-image";
 import "./content-card.scss";
 import ContentModal from "../modal/modal";
 import { Card, CardActionArea, CardContent, Typography } from "@material-ui/core";
+import SupportCard from "../support-card/support-card";
 
 export enum Size {
   SMALL,
@@ -58,9 +59,10 @@ const ContentCard = (props: CardProps) => {
                     setClosed={() => setModalOpen(false)}
                     title={props.title}
                     date={props.date}>
-        <a href={props.url}>
+        <a href={props.url} className="pb-3">
           <img className="img-fluid pb-2" src={props.url} alt={props.title} />
         </a>
+        <SupportCard title={"Like what you see?"}/>
       </ContentModal>
     </>
   );

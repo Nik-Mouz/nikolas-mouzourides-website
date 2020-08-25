@@ -3,6 +3,7 @@ import { graphql } from "gatsby";
 import Seo from "../components/seo/seo";
 import Layout from "../components/layout/layout";
 import { Frontmatter } from "../components/blog-props.state";
+import SupportCard from "../components/support-card/support-card";
 
 interface Props {
   data: {
@@ -23,9 +24,10 @@ const BlogTemplate = (props: Props) => {
         <Seo title={frontmatter.title} description={frontmatter.description}/>
         <h1 className="mb-0 pb-0">{frontmatter.title}</h1>
         <span>{frontmatter.date}</span>
-        <div className="blog mt-3"
+        <div className="blog mt-3 pb-5"
              dangerouslySetInnerHTML={{ __html: html }}
         />
+        <SupportCard title={"Learn something new?"}/>
       </Layout>
     </>
   );
