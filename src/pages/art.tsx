@@ -4,6 +4,7 @@ import Seo from "../components/seo/seo";
 import { graphql } from "gatsby";
 import { BlogProps } from "../components/blog-props.state";
 import ContentCard, { CardProps, ContentType, Size } from "../components/content-card/content-card";
+import SupportCard from "../components/support-card/support-card";
 
 const Art = (props: BlogProps) => {
   const hero = props.data.placeholderImage.childImageSharp.fluid;
@@ -13,10 +14,11 @@ const Art = (props: BlogProps) => {
     <Layout heroImage={hero}>
       <Seo title="Blog" description="Nik Mouzourides sketches"/>
       <h1 className="pb-2">Art</h1>
-      <div className="d-flex flex-row flex-wrap justify-content-center">
+      <div className="d-flex flex-row flex-wrap justify-content-center mb-3">
         {drawingList && drawingList.map((drawing: CardProps) =>
           <ContentCard {...drawing} key={drawing.title}/> )}
       </div>
+      <SupportCard title={"Like what you see?"}/>
     </Layout>
   );
 };

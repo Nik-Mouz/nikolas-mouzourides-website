@@ -59,6 +59,7 @@ Resources:
         CorsRules:
           - AllowedOrigins:
             - 'https://nikmouz.dev'
+            - 'http://192.168.50.67:8000'
             - 'http://localhost:8000'
             AllowedMethods:
               - GET
