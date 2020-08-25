@@ -1,0 +1,35 @@
+.support-card {
+  margin-left: 1rem;
+  margin-right: 1rem;
+  width: 65%;
+
+  a {
+    text-decoration: none;
+    height: 100%;
+  }
+
+  a:hover {
+    color: inherit;
+  }
+
+  @media (max-width: 1024px) {
+    width: 100%
+  }
+
+  &:hover {
+    .coffee-button {
+        background-color: #ab122a;
+    }
+  }
+}
+
+.coffee-button {
+  background-color: #c7132f;
+  padding: 15px;
+  border-radius: 25px;
+
+  span {
+    color: white;
+    font-size: 22px;
+  }
+}
