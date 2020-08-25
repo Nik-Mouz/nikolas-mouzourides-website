@@ -1,2 +1,4 @@
 # nikolas-mouzourides-website
 ![aws build](https://codebuild.eu-west-1.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoicnFZNFRGbE40RnF4RzlZbUk3R2tlMTJ4T0dUV0FGVVo0ZmsybXQxQkRHaGhzRGQreS9TemU0cEhBcGJzNExzckZ4eU1hUHYweTZxaFkrbkFrQml6STdZPSIsIml2UGFyYW1ldGVyU3BlYyI6Img2RU9PMldDK1p3NUxQQ2kiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master)
+
+My personal website: https://nikmouz.dev
