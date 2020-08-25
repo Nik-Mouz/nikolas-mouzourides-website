@@ -37,7 +37,7 @@ const IndexPage = (props: BlogProps) => {
           <i>Welcome to my corner of the web.</i>
         </h5>
         <h1>Recent Activity</h1>
-        <div className="d-flex flex-row flex-wrap">
+        <div className="d-flex flex-row flex-wrap justify-content-center">
           {posts.map((post) =>
             <ContentCard
               key={post.title}
