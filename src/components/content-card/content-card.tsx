@@ -37,7 +37,7 @@ const ContentCard = (props: CardProps) => {
   return (
     <>
       <Card className={"card mb-4" + (" " + Size[props.size].toLocaleLowerCase() + "-card")}
-            data-acctest="blog-card">
+            data-acctest="content-card">
         <CardActionArea component="a" {...action(props.type)}>
           <Img className="img-fluid"
                style={{ height: props.size === Size.SMALL ? 200 : 350 }}

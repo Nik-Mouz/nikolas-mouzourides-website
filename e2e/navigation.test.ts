@@ -7,7 +7,7 @@ test("The navigation bar should display desktop components when on desktop viewp
   await t.expect(Selector(".no-display-mobile").visible).ok();
 });
 
-test.before(t => t.resizeWindow(375, 667))
+test.skip.before(t => t.resizeWindow(375, 667))
   ("The navigation bar should display mobile components when on mobile viewport", async t => {
     await t
       .expect(Selector("[data-acctest='mobile-menu']").visible).ok()
