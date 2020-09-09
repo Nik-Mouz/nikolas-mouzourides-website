@@ -29,7 +29,7 @@ The header accepts the following values:
 - includeSubDomains (optional) -- applies the rule to subdomains
 - preload (optional) -- stated intent for being added to the [HSTS preload list](https://hstspreload.org/)
 
-I set the value of this header to `stricy-transport-security: max-age=31536000; includeSubdomains`, 31536000 seconds being 1 year.
+I set the value of this header to `strict-transport-security: max-age=31536000; includeSubdomains`, 31536000 seconds being 1 year.
 I did not include the preload parameter as all `.dev` domains are registered on the HSTS preload list by default.
 
 ## X Content Type Options
