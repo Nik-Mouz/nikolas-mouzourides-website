@@ -7,7 +7,7 @@ import { IconButton } from "@material-ui/core";
 
 const SocialMediaIcons = () => (
   <>
-    <IconButton color="inherit" aria-label="Email" href="mailto:***REMOVED***">
+    <IconButton color="inherit" aria-label="Email" href="mailto:contact@nikmouz.dev">
       <img src={MailIcon} alt="Mail icon"/>
     </IconButton>
     <IconButton color="inherit" aria-label="Linkedin"

@@ -2,7 +2,7 @@
   "name": "nikmouz.dev",
   "description": "My personal website :)",
   "version": "2.0.0",
-  "author": "Nik Mouzourides <***REMOVED***>",
+  "author": "Nik Mouzourides",
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@types/react-helmet": "^5.0.16",

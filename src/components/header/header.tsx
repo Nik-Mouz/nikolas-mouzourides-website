@@ -73,7 +73,7 @@ const Header = (props: HeaderProps) => {
                 </ListItem>
               </Link>
               <Divider/>
-              <a href="mailto:***REMOVED***">
+              <a href="mailto:contact@nikmouz.dev">
                 <ListItem button key="Email">
                   <ListItemText primary="Email"/>
                 </ListItem>
