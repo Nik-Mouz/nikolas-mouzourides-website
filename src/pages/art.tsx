@@ -7,18 +7,18 @@ import ContentCard, { CardProps, ContentType, Size } from "../components/content
 import SupportCard from "../components/support-card/support-card";
 
 const Art = (props: BlogProps) => {
-  const hero = props.data.placeholderImage.childImageSharp.fluid;
+  const hero = props.data.placeholderImage.childImageSharp.gatsbyImageData;
   const drawingList = useArtFetch();
 
   return (
     <Layout heroImage={hero}>
-      <Seo title="Blog" description="Nik Mouzourides sketches"/>
+      <Seo title="Blog" description="Nik Mouzourides sketches" />
       <h1 className="pb-2">Art</h1>
       <div className="d-flex flex-row flex-wrap justify-content-center mb-3">
         {drawingList && drawingList.map((drawing: CardProps) =>
-          <ContentCard {...drawing} key={drawing.title}/> )}
+          <ContentCard {...drawing} key={drawing.title} />)}
       </div>
-      <SupportCard title={"Like what you see?"}/>
+      <SupportCard title={"Like what you see?"} />
     </Layout>
   );
 };
@@ -27,9 +27,7 @@ export const pageQuery = graphql`
     {
       placeholderImage: file(relativePath: { eq: "drawings-hero.jpg" }) {
           childImageSharp {
-            fluid(maxWidth: 2000) {
-              ...GatsbyImageSharpFluid
-            }
+            gatsbyImageData(layout: FULL_WIDTH, placeholder: BLURRED)
           }
         }
     }
@@ -47,28 +45,43 @@ export function useArtFetch(): CardProps[] {
         const xml = parser.parseFromString(r, "text/xml");
         const contents = Array.from(xml.getElementsByTagName("Contents"));
         const drawings: CardProps[] = contents.map(c => {
-            const fileName = c.childNodes[0].textContent || "";
-            const title: string = (fileName)
-              .replace(/-/g, " ")
-              .replace(".jpg", "")
-              .replace(".jpeg", "")
-              .replace(".png", "");
-            const date = new Date(c.childNodes[1].textContent || "");
+          const fileName = c.childNodes[0].textContent || "";
+          const title: string = (fileName)
+            .replace(/-/g, " ")
+            .replace(".jpg", "")
+            .replace(".jpeg", "")
+            .replace(".png", "");
+          const date = new Date(c.childNodes[1].textContent || "");
 
-            return {
-              type: ContentType.ART,
-              title,
-              url: drawingBaseUrl + fileName,
-              date,
-              size: Size.LARGE,
-              image: {
-                aspectRatio: 200,
-                src: drawingBaseUrl + fileName,
-                srcSet: drawingBaseUrl + fileName,
-                sizes: "(max-width: 2000px) 100vw, 2000px"
-              }
-            };
-          }
+          return {
+            type: ContentType.ART,
+            title,
+            url: drawingBaseUrl + fileName,
+            date,
+            size: Size.LARGE,
+            image: {
+              layout: "constrained",
+              backgroundColor: "#181818",
+              images: {
+                fallback:
+                {
+                  src: drawingBaseUrl + fileName,
+                  srcSet: drawingBaseUrl + fileName,
+                  sizes: "(min-width: 6000px) 6000px, 100vw"
+                },
+                sources: [
+                  {
+                    srcSet: drawingBaseUrl + fileName,
+                    type: "image/webp",
+                    sizes: "(min-width: 6000px) 6000px, 100vw"
+                  }
+                ]
+              },
+              "width": 6000,
+              "height": 2964
+            }
+          };
+        }
         ).sort((a, b) => +a.date + +b.date);
 
         setDrawingList(drawings);

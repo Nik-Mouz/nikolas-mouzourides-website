@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import Img, { FluidObject } from "gatsby-image";
+import { GatsbyImage } from "gatsby-plugin-image"
 
 import "./content-card.scss";
 import ContentModal from "../modal/modal";
 import { Card, CardActionArea, CardContent, Typography } from "@material-ui/core";
-import SupportCard from "../support-card/support-card";
 
 export enum Size {
   SMALL,
@@ -22,7 +21,7 @@ export interface CardProps {
   title: string;
   description?: string;
   url: string;
-  image: FluidObject;
+  image: any;
   date: Date;
 }
 
@@ -39,9 +38,8 @@ const ContentCard = (props: CardProps) => {
       <Card className={"card mb-4" + (" " + Size[props.size].toLocaleLowerCase() + "-card")}
             data-acctest="content-card">
         <CardActionArea component="a" {...action(props.type)}>
-          <Img className="img-fluid"
-               style={{ height: props.size === Size.SMALL ? 200 : 350 }}
-               fadeIn={true} fluid={props.image}/>
+          <GatsbyImage className="img-fluid" alt="card image"
+               style={{ height: props.size === Size.SMALL ? 200 : 350 }} image={props.image}/>
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2" className="mb-0">
               {props.title}

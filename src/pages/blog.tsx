@@ -7,7 +7,8 @@ import ContentCard, { ContentType, Size } from "../components/content-card/conte
 
 const Blog = (props: BlogProps) => {
   const posts = props.data.allMarkdownRemark.edges;
-  const hero = props.data.placeholderImage.childImageSharp.fluid;
+  const hero = props.data.placeholderImage.childImageSharp.gatsbyImageData;
+
   return (
     <Layout heroImage={hero}>
       <Seo title="Blog" description="Nik Mouzourides blog"/>
@@ -20,7 +21,7 @@ const Blog = (props: BlogProps) => {
                        url={post.node.frontmatter.path}
                        date={new Date(post.node.frontmatter.date)}
                        description={post.node.frontmatter.description}
-                       image={post.node.frontmatter.hero.childImageSharp.fluid}
+                       image={post.node.frontmatter.hero.childImageSharp.gatsbyImageData}
                        size={Size.SMALL}
           />
         )}
@@ -44,9 +45,7 @@ export const pageQuery = graphql`
               description
               hero {
                 childImageSharp {
-                  fluid(maxWidth: 2000) {
-                    ...GatsbyImageSharpFluid
-                  }
+                  gatsbyImageData
                 }
               }
             }
@@ -55,9 +54,7 @@ export const pageQuery = graphql`
       }
       placeholderImage: file(relativePath: { eq: "blog-hero.jpg" }) {
           childImageSharp {
-            fluid(maxWidth: 2000) {
-              ...GatsbyImageSharpFluid
-            }
+            gatsbyImageData(layout: FULL_WIDTH, placeholder: BLURRED)
           }
         }
     }

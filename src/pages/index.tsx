@@ -18,13 +18,14 @@ const IndexPage = (props: BlogProps) => {
       date: new Date(edge.node.frontmatter.date),
       description: edge.node.frontmatter.description,
       url: edge.node.frontmatter.path,
-      image: edge.node.frontmatter.hero.childImageSharp.fluid,
+      image: edge.node.frontmatter.hero.childImageSharp.gatsbyImageData,
     })),
     ...drawingList
   ].sort((a: CardProps, b: CardProps) => +b.date - +a.date)
     .slice(0, 3);
 
-  const hero = props.data.placeholderImage.childImageSharp.fluid;
+  const hero = props.data.placeholderImage.childImageSharp.gatsbyImageData;
+
   return (
     <>
       <Layout heroImage={hero}>
@@ -65,20 +66,16 @@ export const pageQuery = graphql`
               description
               hero {
                 childImageSharp {
-                  fluid(maxWidth: 3000) {
-                    ...GatsbyImageSharpFluid
-                  }
+                  gatsbyImageData
                 }
               }
             }
           }
         }
       }
-      placeholderImage: file(relativePath: { eq: "hero.jpg" }) {
+      placeholderImage: file(relativePath: { eq: "home-hero.jpg" }) {
           childImageSharp {
-            fluid(maxWidth: 2000) {
-              ...GatsbyImageSharpFluid
-            }
+            gatsbyImageData(layout: FULL_WIDTH, placeholder: BLURRED)
           }
         }
     }

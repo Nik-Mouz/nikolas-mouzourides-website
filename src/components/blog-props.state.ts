@@ -1,4 +1,4 @@
-import { FluidObject } from "gatsby-image";
+import { IGatsbyImageData } from "gatsby-plugin-image";
 
 export interface BlogProps {
   data: {
@@ -7,7 +7,7 @@ export interface BlogProps {
     },
     placeholderImage: {
       childImageSharp: {
-        fluid: FluidObject;
+        gatsbyImageData: IGatsbyImageData;
       }
     }
   };
@@ -20,7 +20,7 @@ export interface Frontmatter {
   path: string;
   hero: {
     childImageSharp: {
-      fluid: FluidObject;
+      gatsbyImageData: IGatsbyImageData;
     }
   }
 }
