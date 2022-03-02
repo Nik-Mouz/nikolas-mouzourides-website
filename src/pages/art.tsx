@@ -5,6 +5,7 @@ import { graphql } from "gatsby";
 import { BlogProps } from "../components/blog-props.state";
 import ContentCard, { CardProps, ContentType, Size } from "../components/content-card/content-card";
 import SupportCard from "../components/support-card/support-card";
+import {Layout as ILayout} from "gatsby-plugin-image";
 
 const Art = (props: BlogProps) => {
   const hero = props.data.placeholderImage.childImageSharp.gatsbyImageData;
@@ -60,7 +61,7 @@ export function useArtFetch(): CardProps[] {
             date,
             size: Size.LARGE,
             image: {
-              layout: "constrained",
+              layout: "constrained" as ILayout,
               backgroundColor: "#181818",
               images: {
                 fallback:
@@ -77,8 +78,8 @@ export function useArtFetch(): CardProps[] {
                   }
                 ]
               },
-              "width": 6000,
-              "height": 2964
+              width: 6000,
+              height: 2964
             }
           };
         }

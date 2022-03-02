@@ -4,6 +4,7 @@ import { GatsbyImage } from "gatsby-plugin-image"
 import "./content-card.scss";
 import ContentModal from "../modal/modal";
 import { Card, CardActionArea, CardContent, Typography } from "@material-ui/core";
+import { IGatsbyImageData } from "gatsby-plugin-image";
 
 export enum Size {
   SMALL,
@@ -21,7 +22,7 @@ export interface CardProps {
   title: string;
   description?: string;
   url: string;
-  image: any;
+  image: IGatsbyImageData;
   date: Date;
 }
 
