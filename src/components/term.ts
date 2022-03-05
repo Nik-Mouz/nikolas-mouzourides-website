@@ -2,10 +2,11 @@ import { Terminal } from "xterm";
 import { FitAddon } from 'xterm-addon-fit';
 import { WebglAddon } from "xterm-addon-webgl";
 import React, { useEffect } from "react";
+import { CardProps } from "../components/content-card/content-card";
 
-const commands: { [key: string]: (term: Terminal, terminalRef: React.MutableRefObject<null>) => void } = {
-    ls: (term) => {
-        term.writeln(['a', 'bunch', 'of', 'fake', 'files'].join('\r\n'));
+const commands: { [key: string]: (term: Terminal, terminalRef: React.MutableRefObject<null>, commandArgs: string, blogPosts: string[]) => void } = {
+    ls: (term, terminalRef, commandArgs, blogPosts) => {
+        term.writeln(blogPosts.join('\r\n'));
     },
     clear: (term) => {
         term.clear();
@@ -14,8 +15,19 @@ const commands: { [key: string]: (term: Terminal, terminalRef: React.MutableRefO
         term.writeln(new Date().toUTCString());
     },
     help: (term) => {
-        term.writeln(["ls      List files", "clear   Clear sceen", "help    Print available commands",
-            "date    Print system date and time", "pwd     Print the working directory", "exit    Exit terminal"].join('\r\n'));
+        term.writeln(["ls            List blogs", "open [blog]   Open blog", "clear         Clear sceen", "help          Print available commands",
+            "date          Print system date and time", "pwd           Print the working directory",
+            "echo [text]   Print a line of text", "exit          Exit terminal"].join('\r\n'));
+    },
+    echo: (term, _, commandArgs) => {
+        term.writeln(commandArgs.replaceAll("\"", "").replaceAll("'", ""));
+    },
+    open: (term, _, commandArgs, blogPosts) => {
+        if (blogPosts.filter(posts => posts === commandArgs).length > 0) {
+            window.location.href = `/blog/${commandArgs}/`;
+        } else {
+            term.writeln("Unable to open: blog post not found");
+        }
     },
     pwd: (term) => {
         term.writeln("/home/mouzourides/Projects/nikmouz.dev");
@@ -50,7 +62,7 @@ const baseTheme = {
     brightWhite: '#FFFFFF'
 };
 
-export function useTerm(terminalRef: React.MutableRefObject<null>) {
+export function useTerm(terminalRef: React.MutableRefObject<null>, blogPosts: string[]) {
     let buffer: string[] = [];
     let position = 0;
 
@@ -61,15 +73,17 @@ export function useTerm(terminalRef: React.MutableRefObject<null>) {
     }
 
     function runCommand(term: Terminal) {
-        const command = buffer.join("").trim();
-        const func = commands[command];
+        const commandFull: string = buffer.join("").trim();
+        const commandArray: string[] = commandFull.split(" ");
+        const func = commands[commandArray[0]];
 
         if (func) {
             term.write('\r\n');
-            func(term, terminalRef);
+            commandArray.shift();
+            func(term, terminalRef, commandArray.join(" "), blogPosts);
         } else {
             if (buffer.length !== 0) {
-                term.writeln("\r\n" + command + ": command not found, run help");
+                term.writeln("\r\n" + commandFull + ": command not found, run help");
             }
         }
     }

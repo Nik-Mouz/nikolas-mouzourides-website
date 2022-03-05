@@ -20,7 +20,6 @@ const ContentModal = (props: ModalProps) => {
       aria-describedby="transition-modal-description"
       disableScrollLock={false}
       open={props.open}
-      onEscapeKeyDown={() => props.setClosed()}
       onClose={() => props.setClosed()}
       closeAfterTransition
       BackdropComponent={Backdrop}
