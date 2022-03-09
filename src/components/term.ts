@@ -100,7 +100,11 @@ export function useTerm(terminalRef: React.MutableRefObject<null>, blogPosts: st
         if (element) {
             term.loadAddon(fitAddon);
             term.open(element);
-            term.loadAddon(new WebglAddon());
+
+            if (!isDeviceiOS()) {
+                term.loadAddon(new WebglAddon());
+            }
+
             fitAddon.fit();
             term.writeln("I'm Nikolas Mouzourides - software developer, hacker, gamer, and sketcher.\n");
             term.writeln("\x1b[3mWelcome to my corner of the web.\x1b[0m");
@@ -166,3 +170,16 @@ export function useTerm(terminalRef: React.MutableRefObject<null>, blogPosts: st
         }
     }, []);
 } 
+
+function isDeviceiOS() {
+    return [
+      'iPad Simulator',
+      'iPhone Simulator',
+      'iPod Simulator',
+      'iPad',
+      'iPhone',
+      'iPod'
+    ].includes(navigator.userAgent)
+    // iPad on iOS 13 detection
+    || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
+  }
